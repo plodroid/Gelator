@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" role="img" aria-labelledby="title">
+  <title id="title">Illustrated waffle</title>
+  <defs>
+    <clipPath id="c"><path d="M87 95c9-31 37-54 70-58l198-23c34-4 66 14 81 45l58 123c15 32 8 69-19 92L328 397c-27 23-66 27-97 9L68 312c-31-18-48-54-40-89L87 95Z"/></clipPath>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#6b4810" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <g filter="url(#s)">
+    <path d="M87 95c9-31 37-54 70-58l198-23c34-4 66 14 81 45l58 123c15 32 8 69-19 92L328 397c-27 23-66 27-97 9L68 312c-31-18-48-54-40-89L87 95Z" fill="#e7a43a"/>
+    <g clip-path="url(#c)" stroke="#9f611f" stroke-width="12" opacity=".48">
+      <path d="M-40 110 460 410M-10 38 500 344M40-20 540 280M-20 250 300 0M60 350 410 20M170 430 500 100"/>
+      <path d="M-30 190 320 430M100 0 520 270M-40 330 300 0M220 430 520 150"/>
+    </g>
+    <path d="M151 68c55-21 136-30 204-19 38 6 62 19 75 39-30-9-69-10-116-4-68 8-123 24-163 48V68Z" fill="#f5bf5a" opacity=".65"/>
+    <path d="M364 72c27 10 47 28 58 55 9 22 10 46 4 72-13-29-34-52-62-68V72Z" fill="#c67d26" opacity=".44"/>
+    <circle cx="118" cy="308" r="26" fill="#d94844"/>
+    <circle cx="149" cy="332" r="20" fill="#7b2f59"/>
+    <circle cx="95" cy="340" r="16" fill="#7b2f59"/>
+    <path d="M294 104c18-10 37-14 56-10 18 3 30 11 36 23 6 13 3 25-9 36-12 11-29 17-49 18-20 1-35-4-44-15-9-11-6-25 10-52Z" fill="#fff8f6"/>
+    <path d="M308 101c7 11 17 19 29 24 13 5 27 7 43 4-7-16-20-27-39-32-12-3-23-2-33 4Z" fill="#fff0c8"/>
+  </g>
+</svg>
