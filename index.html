@@ -93,7 +93,7 @@
           <span><i>the detour.</i></span>
         </h1>
         <p class="hero-lead" data-reveal="fade">
-          Gelato, crêpes, waffles, pancakes and the things you “just came to look at” before ordering anyway.
+          Gelato, crêpes, waffles, pancakes and signature desserts, served fresh in Annaba.
         </p>
         <div class="hero-actions" data-reveal="fade">
           <button class="primary-link" type="button" data-menu-open>
@@ -116,15 +116,15 @@
 
       <div class="hero-bottom" data-reveal="fade">
         <span>36.9247° N · 7.7619° E</span>
-        <span>Scroll slowly — some stuff moves 👀</span>
+        <span>Explore the menu, gallery and location</span>
       </div>
     </section>
 
     <section class="menu-callout" id="menu">
       <div class="menu-callout-copy">
-        <p class="kicker" data-reveal="fade">ONE MENU. A LOT OF BAD DECISIONS.</p>
+        <p class="kicker" data-reveal="fade">THE MENU</p>
         <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>weakness.</i></span></h2>
-        <p data-reveal="fade">The full menu stays tucked away until you want it, so the page doesn’t become a 14-kilometre scroll marathon.</p>
+        <p data-reveal="fade">Open the full menu when you need it. Search by name, filter by category, and check prices without leaving the page.</p>
       </div>
 
       <button class="menu-launch" type="button" data-menu-open data-reveal="scale">
@@ -150,32 +150,32 @@
     <section class="story" aria-label="Zoom Gelato experience">
       <div class="story-head">
         <p class="kicker" data-reveal="fade">THE VIBE</p>
-        <h2 data-reveal="lines"><span><i>Not stock photos.</i></span><span><i>Actual Zoom.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Made at Zoom.</i></span><span><i>Served for real.</i></span></h2>
       </div>
 
       <div class="story-gallery">
-        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe">
+        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe" data-lightbox="assets/WaffleBitesWithDrinkBehindIt.png" tabindex="0" role="button" aria-label="View waffle bites photo larger">
           <div class="photo-image-shell shell-warm">
             <img src="assets/WaffleBitesWithDrinkBehindIt.png" alt="Waffle bites with a drink behind them at Zoom Gelato" />
           </div>
           <figcaption><span>WAFFLE BITES</span><strong>Crunch first. Drink second.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe">
+        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" tabindex="0" role="button" aria-label="View strawberry cake photo larger">
           <div class="photo-image-shell shell-pink">
             <img src="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" alt="A strawberry cake slice with another dessert in the background" />
           </div>
           <figcaption><span>CAKE</span><strong>Soft, rich, and absolutely not subtle.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe">
+        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="assets/ViewOfIcecreamMixThingOutside.png" tabindex="0" role="button" aria-label="View outside dessert photo larger">
           <div class="photo-image-shell shell-cool">
             <img src="assets/ViewOfIcecreamMixThingOutside.png" alt="A mixed ice cream dessert photographed outside Zoom Gelato" />
           </div>
           <figcaption><span>OUTSIDE ZOOM</span><strong>Dessert with a bit of Annaba around it.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe">
+        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="assets/chockolatePistachSlide.png" tabindex="0" role="button" aria-label="View chocolate pistachio dessert photo larger">
           <div class="photo-image-shell shell-pistachio">
             <img src="assets/chockolatePistachSlide.png" alt="A chocolate and pistachio dessert slice" />
           </div>
@@ -188,7 +188,7 @@
       <div class="reel-copy">
         <p class="kicker" data-reveal="fade">A QUICK LOOK</p>
         <h2 data-reveal="lines"><span><i>See Zoom</i></span><span><i>in motion.</i></span></h2>
-        <p data-reveal="fade">A live Instagram Reel from Zoom Gelato — no downloaded copy stored on this site.</p>
+        <p data-reveal="fade">A live Reel from Zoom Gelato, embedded directly from Instagram.</p>
         <a class="reel-link" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="fade">Open on Instagram ↗</a>
       </div>
 
@@ -201,11 +201,16 @@
         <div class="reel-embed-wrap">
           <iframe
             title="Zoom Gelato Instagram Reel"
-            src="https://www.instagram.com/reel/C-nqzotO2Zs/embed"
+            src="https://www.instagram.com/reel/C-nqzotO2Zs/embed/?autoplay=1&muted=1&loop=1"
             loading="lazy"
             allow="autoplay; encrypted-media; picture-in-picture"
-            allowfullscreen>
+            tabindex="-1"
+            aria-hidden="true">
           </iframe>
+          <div class="reel-muted-badge" aria-hidden="true">
+            <span>Muted</span>
+            <span>↻</span>
+          </div>
         </div>
         <div class="reel-note"><span>LIVE FROM INSTAGRAM</span><span>↗</span></div>
       </div>
@@ -213,7 +218,7 @@
 
     <section class="visit" id="visit">
       <div class="visit-copy">
-        <p class="kicker" data-reveal="fade">ACTUAL MAP. FINALLY.</p>
+        <p class="kicker" data-reveal="fade">FIND US</p>
         <h2 data-reveal="lines"><span><i>Zoom into</i></span><span><i>Zoom.</i></span></h2>
         <p data-reveal="fade">Interactive Google Maps embed using Zoom Gelato’s exact coordinates in Annaba.</p>
 
@@ -238,6 +243,17 @@
       </div>
     </section>
   </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Zoom Gelato photo viewer">
+    <button class="lightbox-backdrop" type="button" data-lightbox-close aria-label="Close image viewer"></button>
+    <div class="lightbox-panel">
+      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">
+        <span></span><span></span>
+      </button>
+      <img src="" alt="" data-lightbox-image />
+      <div class="lightbox-caption" data-lightbox-caption></div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="footer-top">
