@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" role="img" aria-labelledby="title">
+  <title id="title">Illustrated stack of pancakes</title>
+  <defs>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#6b1b13" flood-opacity=".22"/>
+    </filter>
+  </defs>
+  <g filter="url(#s)">
+    <ellipse cx="260" cy="354" rx="176" ry="34" fill="#8d271f" opacity=".22"/>
+    <g transform="rotate(-2 260 240)">
+      <ellipse cx="260" cy="303" rx="170" ry="54" fill="#b65d2c"/>
+      <ellipse cx="260" cy="290" rx="170" ry="54" fill="#efaf59"/>
+      <path d="M100 287c47 32 274 46 322-4-9 28-31 57-161 58-118 1-151-27-161-54Z" fill="#c87634"/>
+      <ellipse cx="260" cy="252" rx="170" ry="54" fill="#b65d2c"/>
+      <ellipse cx="260" cy="239" rx="170" ry="54" fill="#f3b45d"/>
+      <path d="M99 237c58 34 278 42 323-6-6 38-50 57-164 58-116 1-149-20-159-52Z" fill="#c87634"/>
+      <ellipse cx="260" cy="201" rx="168" ry="54" fill="#b65d2c"/>
+      <ellipse cx="260" cy="188" rx="168" ry="54" fill="#f6bb64"/>
+      <ellipse cx="212" cy="171" rx="62" ry="19" fill="#e9a34d" opacity=".56"/>
+      <ellipse cx="316" cy="193" rx="28" ry="11" fill="#dc8c3d" opacity=".5"/>
+    </g>
+    <path d="M294 95c31 8 54 24 63 43 8 16 6 33-6 46-12 14-31 21-54 19-22-2-43-12-55-27-12-16-14-35-4-51 11-18 31-29 56-30Z" fill="#fff0bb"/>
+    <path d="M336 65c12 23 20 40 24 51 5 15 2 28-8 39-13 13-32 17-51 12-20-5-34-18-36-34-2-12 4-27 18-44 11-14 28-29 53-45Z" fill="#fec30d"/>
+    <path d="M287 69c11 14 18 27 21 37 3 13 0 23-8 31-10 10-25 13-39 9-15-4-25-14-27-26-1-9 4-20 14-33 9-10 21-20 39-31Z" fill="#fff8f6"/>
+    <path d="M204 119c15-10 30-14 44-13 13 1 21 6 25 14 4 9 1 17-9 25-11 9-25 14-42 14-16 0-27-4-32-12-5-8-1-18 14-28Z" fill="#d94f46"/>
+    <circle cx="222" cy="126" r="5" fill="#fff8f6" opacity=".7"/>
+    <circle cx="251" cy="114" r="4" fill="#fff8f6" opacity=".55"/>
+  </g>
+</svg>
