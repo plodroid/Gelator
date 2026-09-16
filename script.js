@@ -269,34 +269,54 @@ addEventListener("scroll", () => {
 }, {passive:true});
 
 const parallaxItems = $$("[data-parallax]");
-let parallaxRAF = 0;
+const parallaxState = new Map(
+  parallaxItems.map(item => [item, {current:0, target:0}])
+);
+let parallaxMeasureRAF = 0;
+let parallaxMotionRAF = 0;
 
-function updateParallax(){
-  parallaxRAF = 0;
+function measureParallax(){
+  parallaxMeasureRAF = 0;
   if(reducedMotion) return;
 
   const vh = innerHeight;
 
   parallaxItems.forEach(item => {
-    const speed = Number(item.dataset.parallax || 0);
     const rect = item.getBoundingClientRect();
+    if(rect.bottom < -160 || rect.top > vh + 160) return;
 
-    if(rect.bottom < -120 || rect.top > vh + 120) return;
-
-    const centerDelta = (rect.top + rect.height * 0.5) - vh * 0.5;
-    const offset = Math.max(-82, Math.min(82, centerDelta * -speed));
-    item.style.setProperty("--py", offset.toFixed(2) + "px");
+    const speed = Number(item.dataset.parallax || 0);
+    const centerDelta = (rect.top + rect.height * .5) - vh * .5;
+    const state = parallaxState.get(item);
+    state.target = Math.max(-78, Math.min(78, centerDelta * -speed));
   });
+
+  if(!parallaxMotionRAF) parallaxMotionRAF = requestAnimationFrame(animateParallax);
 }
 
-function requestParallax(){
-  if(parallaxRAF) return;
-  parallaxRAF = requestAnimationFrame(updateParallax);
+function animateParallax(){
+  parallaxMotionRAF = 0;
+  let keepGoing = false;
+
+  parallaxState.forEach((state, item) => {
+    const delta = state.target - state.current;
+    state.current += delta * .13;
+
+    if(Math.abs(delta) > .08) keepGoing = true;
+    item.style.setProperty("--py", state.current.toFixed(2) + "px");
+  });
+
+  if(keepGoing) parallaxMotionRAF = requestAnimationFrame(animateParallax);
 }
 
-addEventListener("scroll", requestParallax, {passive:true});
-addEventListener("resize", requestParallax);
-requestParallax();
+function requestParallaxMeasure(){
+  if(parallaxMeasureRAF) return;
+  parallaxMeasureRAF = requestAnimationFrame(measureParallax);
+}
+
+addEventListener("scroll", requestParallaxMeasure, {passive:true});
+addEventListener("resize", requestParallaxMeasure);
+requestParallaxMeasure();
 
 if(finePointer && !reducedMotion){
   $$("[data-tilt]").forEach(frame => {
@@ -317,7 +337,6 @@ if(finePointer && !reducedMotion){
 
 const cursor = $("#iceCursor");
 const cursorShape = $(".cursor-shape", cursor);
-const particleLayer = $("#cursorParticles");
 
 if(finePointer && !reducedMotion && cursor && cursorShape){
   document.documentElement.classList.add("custom-cursor");
@@ -325,113 +344,121 @@ if(finePointer && !reducedMotion && cursor && cursorShape){
   let lastX = -100;
   let lastY = -100;
   let lastT = performance.now();
-  let angle = 0;
-  let smoothAngle = 0;
-  let stretch = 0;
-  let stretchTarget = 0;
+  let angleTarget = 0;
+  let angleCurrent = 0;
+  let speedTarget = 0;
+  let speedCurrent = 0;
   let cursorRAF = 0;
-  let lastParticleAt = 0;
 
-  const particlePool = Array.from({length: 14}, () => {
-    const node = document.createElement("span");
-    node.className = "cursor-particle";
-    node.style.opacity = "0";
-    particleLayer.append(node);
-    return node;
-  });
-
-  let particleIndex = 0;
-
-  function spawnParticle(px, py, intensity){
-    const now = performance.now();
-    const interval = 70 - intensity * 28;
-    if(now - lastParticleAt < interval) return;
-    lastParticleAt = now;
-
-    const particle = particlePool[particleIndex++ % particlePool.length];
-    const size = 2.5 + intensity * 4.2;
-    const driftX = (Math.random() - .5) * (7 + intensity * 12);
-    const fallY = 8 + intensity * 18;
-    const duration = 320 + intensity * 180;
-
-    particle.getAnimations().forEach(animation => animation.cancel());
-    particle.style.width = size + "px";
-    particle.style.height = size + "px";
-    particle.style.left = px + "px";
-    particle.style.top = py + "px";
-
-    particle.animate([
-      { transform:"translate3d(-50%,-50%,0) scale(1)", opacity:.76 },
-      { transform:`translate3d(calc(-50% + ${driftX}px),calc(-50% + ${fallY}px),0) scale(.25)`, opacity:0 }
-    ], {
-      duration,
-      easing:"cubic-bezier(.22,1,.36,1)",
-      fill:"forwards"
-    });
-  }
-
-  function shapeFrame(){
+  function cursorShapeFrame(){
     cursorRAF = 0;
 
-    const angleDelta = ((angle - smoothAngle + 540) % 360) - 180;
-    smoothAngle += angleDelta * .22;
-    stretch += (stretchTarget - stretch) * .24;
-    stretchTarget *= .82;
+    const angleDelta = ((angleTarget - angleCurrent + 540) % 360) - 180;
+    angleCurrent += angleDelta * .24;
+    speedCurrent += (speedTarget - speedCurrent) * .28;
+    speedTarget *= .78;
 
-    cursorShape.style.setProperty("--angle", smoothAngle.toFixed(2) + "deg");
-    cursorShape.style.setProperty("--stretch", stretch.toFixed(3));
+    const sx = 1 + speedCurrent * .34;
+    const sy = 1 - speedCurrent * .16;
+    const blur = Math.min(.7, speedCurrent * .62);
 
-    if(Math.abs(angleDelta) > .1 || Math.abs(stretchTarget - stretch) > .002){
-      cursorRAF = requestAnimationFrame(shapeFrame);
+    cursorShape.style.setProperty("--angle", angleCurrent.toFixed(2) + "deg");
+    cursorShape.style.setProperty("--sx", sx.toFixed(3));
+    cursorShape.style.setProperty("--sy", sy.toFixed(3));
+    cursorShape.style.setProperty("--motion-blur", blur.toFixed(2) + "px");
+
+    if(Math.abs(angleDelta) > .08 || Math.abs(speedTarget - speedCurrent) > .002){
+      cursorRAF = requestAnimationFrame(cursorShapeFrame);
     }
   }
 
   const moveCursor = event => {
     const now = performance.now();
-    const dt = Math.max(7, now - lastT);
+    const dt = Math.max(6, now - lastT);
     const dx = event.clientX - lastX;
     const dy = event.clientY - lastY;
     const velocity = Math.hypot(dx,dy) / dt;
-    const speed01 = Math.min(1, velocity / 2.4);
+    const speed01 = Math.min(1, velocity / 2.25);
 
-    if(Math.abs(dx) + Math.abs(dy) > .1){
-      angle = Math.atan2(dy,dx) * 180 / Math.PI + 90;
+    if(Math.abs(dx) + Math.abs(dy) > .08){
+      angleTarget = Math.atan2(dy,dx) * 180 / Math.PI;
     }
 
-    stretchTarget = Math.max(stretchTarget, speed01 * .42);
+    speedTarget = Math.max(speedTarget, speed01);
 
-    // Pointer position is updated immediately; only the ice cream itself eases.
+    // Position tracks the real pointer immediately; only shape/rotation are eased.
     cursor.style.transform =
       `translate3d(${event.clientX}px,${event.clientY}px,0) translate(-50%,-50%)`;
     cursor.classList.add("ready");
-
-    if(speed01 > .32){
-      spawnParticle(event.clientX - dx * .2, event.clientY - dy * .2 + 8, speed01);
-    }
 
     lastX = event.clientX;
     lastY = event.clientY;
     lastT = now;
 
-    if(!cursorRAF) cursorRAF = requestAnimationFrame(shapeFrame);
+    if(!cursorRAF) cursorRAF = requestAnimationFrame(cursorShapeFrame);
   };
 
   const pointerEvent = "onpointerrawupdate" in window ? "pointerrawupdate" : "pointermove";
   addEventListener(pointerEvent, moveCursor, {passive:true});
 
   document.addEventListener("mouseover", event => {
-    const interactive = !!event.target.closest("a,button,input,select,iframe,[data-tilt]");
+    const interactive = !!event.target.closest(
+      "a,button,input,select,iframe,[data-tilt],[data-lightbox]"
+    );
     cursor.classList.toggle("hover", interactive);
   });
 
   addEventListener("pointerdown", () => {
-    stretchTarget = .12;
-    if(!cursorRAF) cursorRAF = requestAnimationFrame(shapeFrame);
+    speedTarget = Math.max(speedTarget,.26);
+    if(!cursorRAF) cursorRAF = requestAnimationFrame(cursorShapeFrame);
   }, {passive:true});
 
   document.addEventListener("mouseleave", () => cursor.classList.remove("ready"));
   document.addEventListener("mouseenter", () => cursor.classList.add("ready"));
 }
+
+const lightbox = $("#lightbox");
+const lightboxImage = $("[data-lightbox-image]");
+const lightboxCaption = $("[data-lightbox-caption]");
+const lightboxCards = $$("[data-lightbox]");
+const lightboxClosers = $$("[data-lightbox-close]");
+let lightboxReturnFocus = null;
+
+function openLightbox(card){
+  if(!lightbox || !lightboxImage) return;
+  lightboxReturnFocus = card;
+  lightboxImage.src = card.dataset.lightbox;
+  lightboxImage.alt = $("img",card)?.alt || "Zoom Gelato photo";
+  lightboxCaption.textContent = $("figcaption strong",card)?.textContent || "";
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  document.body.classList.add("menu-open");
+  requestAnimationFrame(() => $(".lightbox-close",lightbox)?.focus({preventScroll:true}));
+}
+
+function closeLightbox(){
+  if(!lightbox) return;
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden","true");
+  document.body.classList.remove("menu-open");
+  lightboxImage.removeAttribute("src");
+  lightboxReturnFocus?.focus({preventScroll:true});
+}
+
+lightboxCards.forEach(card => {
+  card.addEventListener("click",() => openLightbox(card));
+  card.addEventListener("keydown",event => {
+    if(event.key === "Enter" || event.key === " "){
+      event.preventDefault();
+      openLightbox(card);
+    }
+  });
+});
+
+lightboxClosers.forEach(button => button.addEventListener("click",closeLightbox));
+addEventListener("keydown",event => {
+  if(event.key === "Escape" && lightbox?.classList.contains("open")) closeLightbox();
+});
 
 const mapWrap = $(".map-wrap");
 const mapIframe = $(".map-wrap iframe");
