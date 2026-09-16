@@ -1341,13 +1341,23 @@ img{display:block;max-width:100%}
   }
 
   .header-socials a{
-    max-width:28px;
-    overflow:hidden;
-    white-space:nowrap;
+    width:24px;
+    padding:8px 0;
+    font-size:0;
+    text-align:center;
   }
 
-  .header-socials a:first-child::first-letter,
-  .header-socials a:last-child::first-letter{font-weight:900}
+  .header-socials a:first-of-type::before{
+    content:"IG";
+    font-size:10px;
+    font-weight:900;
+  }
+
+  .header-socials a:last-of-type::before{
+    content:"FB";
+    font-size:10px;
+    font-weight:900;
+  }
 
   .wordmark{
     justify-self:center;
