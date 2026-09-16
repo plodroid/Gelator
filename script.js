@@ -316,24 +316,23 @@ if(finePointer && !reducedMotion){
 }
 
 const cursor = $("#iceCursor");
+const cursorShape = $(".cursor-shape", cursor);
 const particleLayer = $("#cursorParticles");
 
-if(finePointer && !reducedMotion && cursor){
+if(finePointer && !reducedMotion && cursor && cursorShape){
   document.documentElement.classList.add("custom-cursor");
 
-  let x = -100;
-  let y = -100;
   let lastX = -100;
   let lastY = -100;
   let lastT = performance.now();
   let angle = 0;
+  let smoothAngle = 0;
   let stretch = 0;
-  let targetStretch = 0;
-  let speed01 = 0;
-  let lastParticleAt = 0;
+  let stretchTarget = 0;
   let cursorRAF = 0;
+  let lastParticleAt = 0;
 
-  const particlePool = Array.from({length: 26}, () => {
+  const particlePool = Array.from({length: 14}, () => {
     const node = document.createElement("span");
     node.className = "cursor-particle";
     node.style.opacity = "0";
@@ -345,90 +344,90 @@ if(finePointer && !reducedMotion && cursor){
 
   function spawnParticle(px, py, intensity){
     const now = performance.now();
-    const interval = 54 - intensity * 32;
+    const interval = 70 - intensity * 28;
     if(now - lastParticleAt < interval) return;
     lastParticleAt = now;
 
     const particle = particlePool[particleIndex++ % particlePool.length];
-    const size = 3 + intensity * 5;
-    const driftX = (Math.random() - 0.5) * (8 + intensity * 18);
-    const fallY = 10 + intensity * 24;
-    const lifetime = 360 + Math.random() * 220;
+    const size = 2.5 + intensity * 4.2;
+    const driftX = (Math.random() - .5) * (7 + intensity * 12);
+    const fallY = 8 + intensity * 18;
+    const duration = 320 + intensity * 180;
 
     particle.getAnimations().forEach(animation => animation.cancel());
     particle.style.width = size + "px";
     particle.style.height = size + "px";
     particle.style.left = px + "px";
     particle.style.top = py + "px";
-    particle.style.opacity = "1";
 
     particle.animate([
-      {
-        transform: "translate(-50%,-50%) scale(1)",
-        opacity: 0.82,
-        filter: "blur(0px)"
-      },
-      {
-        transform: `translate(calc(-50% + ${driftX}px), calc(-50% + ${fallY}px)) scale(.28)`,
-        opacity: 0,
-        filter: `blur(${1 + intensity * 2.2}px)`
-      }
+      { transform:"translate3d(-50%,-50%,0) scale(1)", opacity:.76 },
+      { transform:`translate3d(calc(-50% + ${driftX}px),calc(-50% + ${fallY}px),0) scale(.25)`, opacity:0 }
     ], {
-      duration: lifetime,
-      easing: "cubic-bezier(.22,1,.36,1)",
-      fill: "forwards"
+      duration,
+      easing:"cubic-bezier(.22,1,.36,1)",
+      fill:"forwards"
     });
   }
 
-  addEventListener("pointermove", event => {
+  function shapeFrame(){
+    cursorRAF = 0;
+
+    const angleDelta = ((angle - smoothAngle + 540) % 360) - 180;
+    smoothAngle += angleDelta * .22;
+    stretch += (stretchTarget - stretch) * .24;
+    stretchTarget *= .82;
+
+    cursorShape.style.setProperty("--angle", smoothAngle.toFixed(2) + "deg");
+    cursorShape.style.setProperty("--stretch", stretch.toFixed(3));
+
+    if(Math.abs(angleDelta) > .1 || Math.abs(stretchTarget - stretch) > .002){
+      cursorRAF = requestAnimationFrame(shapeFrame);
+    }
+  }
+
+  const moveCursor = event => {
     const now = performance.now();
     const dt = Math.max(7, now - lastT);
     const dx = event.clientX - lastX;
     const dy = event.clientY - lastY;
     const velocity = Math.hypot(dx,dy) / dt;
+    const speed01 = Math.min(1, velocity / 2.4);
 
-    speed01 = Math.min(1, velocity / 2.35);
-    targetStretch = speed01 * 0.48;
-
-    if(Math.abs(dx) + Math.abs(dy) > 0.15){
+    if(Math.abs(dx) + Math.abs(dy) > .1){
       angle = Math.atan2(dy,dx) * 180 / Math.PI + 90;
     }
 
-    x = event.clientX;
-    y = event.clientY;
-    lastX = x;
-    lastY = y;
-    lastT = now;
+    stretchTarget = Math.max(stretchTarget, speed01 * .42);
 
+    // Pointer position is updated immediately; only the ice cream itself eases.
+    cursor.style.transform =
+      `translate3d(${event.clientX}px,${event.clientY}px,0) translate(-50%,-50%)`;
     cursor.classList.add("ready");
 
-    if(speed01 > 0.24){
-      spawnParticle(x - dx * 0.28, y - dy * 0.28 + 8, speed01);
+    if(speed01 > .32){
+      spawnParticle(event.clientX - dx * .2, event.clientY - dy * .2 + 8, speed01);
     }
 
-    if(!cursorRAF) cursorRAF = requestAnimationFrame(cursorFrame);
-  }, {passive:true});
+    lastX = event.clientX;
+    lastY = event.clientY;
+    lastT = now;
 
-  function cursorFrame(){
-    cursorRAF = 0;
-    stretch += (targetStretch - stretch) * 0.28;
-    targetStretch *= 0.82;
-    speed01 *= 0.9;
+    if(!cursorRAF) cursorRAF = requestAnimationFrame(shapeFrame);
+  };
 
-    cursor.style.setProperty("--angle", angle.toFixed(2) + "deg");
-    cursor.style.setProperty("--stretch", stretch.toFixed(3));
-    cursor.style.transform =
-      `translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${angle}deg) scale(${1 + stretch},${1 - stretch * 0.18})`;
-
-    if(Math.abs(targetStretch - stretch) > 0.003 || speed01 > 0.02){
-      cursorRAF = requestAnimationFrame(cursorFrame);
-    }
-  }
+  const pointerEvent = "onpointerrawupdate" in window ? "pointerrawupdate" : "pointermove";
+  addEventListener(pointerEvent, moveCursor, {passive:true});
 
   document.addEventListener("mouseover", event => {
-    const interactive = !!event.target.closest("a,button,input,select,[data-tilt]");
+    const interactive = !!event.target.closest("a,button,input,select,iframe,[data-tilt]");
     cursor.classList.toggle("hover", interactive);
   });
+
+  addEventListener("pointerdown", () => {
+    stretchTarget = .12;
+    if(!cursorRAF) cursorRAF = requestAnimationFrame(shapeFrame);
+  }, {passive:true});
 
   document.addEventListener("mouseleave", () => cursor.classList.remove("ready"));
   document.addEventListener("mouseenter", () => cursor.classList.add("ready"));
