@@ -3,271 +3,242 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#cd2920" />
-  <meta name="description" content="Zoom Gelato — gelato, crêpes, waffles, pancakes, cakes and more in Annaba, Algeria." />
+  <meta name="theme-color" content="#fff8f6" />
+  <meta name="description" content="Zoom Gelato in Annaba — gelato, crêpes, waffles, pancakes, cakes and more." />
+  <meta property="og:title" content="Zoom Gelato — Annaba" />
+  <meta property="og:description" content="Dessert worth the detour." />
+  <meta property="og:type" content="website" />
   <title>Zoom Gelato — Annaba</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <meta property="og:title" content="Zoom Gelato — Annaba" />
-  <meta property="og:description" content="Gelato, crêpes, waffles, pancakes, cakes and more." />
-  <meta property="og:type" content="website" />
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <div class="cursor-layer" aria-hidden="true">
+    <div class="ice-cursor" id="iceCursor">
+      <span class="ice-scoop"></span>
+      <span class="ice-cone"></span>
+      <span class="ice-drip"></span>
+    </div>
+    <div class="cursor-particles" id="cursorParticles"></div>
+  </div>
+
   <header class="site-header" data-header>
-    <a class="brand" href="#top" aria-label="Zoom Gelato home">
-      <span class="brand-mark" aria-hidden="true">Z</span>
-      <span class="brand-copy">
-        <strong>ZOOM</strong>
-        <small>GELATO</small>
-      </span>
+    <div class="header-socials" aria-label="Zoom Gelato social links">
+      <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram</a>
+      <span aria-hidden="true">/</span>
+      <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook</a>
+    </div>
+
+    <a class="wordmark" href="#top" aria-label="Zoom Gelato home">
+      <span>ZOOM</span>
+      <small>gelato</small>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#favorites">Favorites</a>
-      <a href="#menu">Menu</a>
-      <a href="#sundae">Build a Sundae</a>
-      <a href="#visit">Visit</a>
-    </nav>
-
-    <div class="header-actions">
-      <a class="header-social" href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer" aria-label="Zoom Gelato on Instagram">IG</a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-toggle>
-        <span></span><span></span>
-        <span class="sr-only">Open menu</span>
-      </button>
-    </div>
+    <button class="menu-trigger" type="button" data-menu-open aria-haspopup="dialog" aria-controls="menuDrop">
+      <span>Menu</span>
+      <svg class="menu-icon" viewBox="0 0 28 28" aria-hidden="true">
+        <path d="M9.4 11.2c.8-3.6 3.1-5.6 6.8-5.6 3.6 0 5.8 1.9 6.5 5.5" />
+        <path d="M8.1 12.2h15.2l-5.7 11.2c-.6 1.1-2.1 1.1-2.7 0L8.1 12.2Z" />
+        <circle cx="13.4" cy="8.4" r="3.1" />
+        <circle cx="18.2" cy="8.1" r="2.8" />
+      </svg>
+    </button>
   </header>
 
-  <aside class="mobile-nav" id="mobile-nav" aria-hidden="true" data-mobile-nav>
-    <div class="mobile-nav-inner">
-      <p class="eyebrow">EXPLORE ZOOM</p>
-      <a href="#favorites">Favorites <span>01</span></a>
-      <a href="#menu">Full menu <span>02</span></a>
-      <a href="#sundae">Build a Sundae <span>03</span></a>
-      <a href="#visit">Visit us <span>04</span></a>
-      <div class="mobile-socials">
-        <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook</a>
-        <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram</a>
+  <div class="menu-backdrop" data-menu-backdrop></div>
+
+  <section class="menu-drop" id="menuDrop" role="dialog" aria-modal="true" aria-labelledby="menuDropTitle" aria-hidden="true" data-menu-drop>
+    <div class="menu-drop-head">
+      <div>
+        <p class="kicker">ZOOM GELATO · ANNABA</p>
+        <h2 id="menuDropTitle">The menu.</h2>
       </div>
+      <button class="menu-close" type="button" data-menu-close aria-label="Close menu">
+        <span></span><span></span>
+      </button>
     </div>
-  </aside>
+
+    <div class="menu-toolbar">
+      <label class="menu-select-wrap">
+        <span>Category</span>
+        <select data-menu-category aria-label="Filter menu by category"></select>
+      </label>
+      <label class="menu-search-wrap">
+        <span>Search</span>
+        <input type="search" placeholder="Try “pistache” or “crêpe”" data-menu-search autocomplete="off" />
+      </label>
+    </div>
+
+    <div class="menu-results-meta">
+      <span><b data-menu-count>0</b> items</span>
+      <span>Prices from the supplied Zoom menu</span>
+    </div>
+
+    <div class="menu-list" data-menu-list aria-live="polite"></div>
+  </section>
 
   <main id="main">
     <section class="hero" id="top">
-      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="hero-orbit" data-parallax="0.12" aria-hidden="true"></div>
+
       <div class="hero-copy">
-        <p class="eyebrow hero-eyebrow reveal">ANNABA · GELATO & DESSERT BAR</p>
-        <h1 class="hero-title reveal">
-          <span>THE SWEET</span>
-          <span>SPOT THAT</span>
-          <span class="hero-title-accent">MOVES.</span>
+        <p class="kicker hero-kicker" data-reveal="fade">ANNABA · DESSERT BAR</p>
+        <h1 class="hero-title" data-reveal="lines">
+          <span><i>Dessert worth</i></span>
+          <span><i>the detour.</i></span>
         </h1>
-        <p class="hero-lede reveal">Gelato, crêpes, waffles, pancakes, cheesecakes and the kind of desserts you plan a detour for.</p>
-        <div class="hero-actions reveal">
-          <a class="btn btn-yellow" href="#menu">Explore the menu <span aria-hidden="true">↘</span></a>
-          <a class="btn btn-ghost" href="#visit">Find Zoom <span aria-hidden="true">→</span></a>
+        <p class="hero-lead" data-reveal="fade">
+          Gelato, crêpes, waffles, pancakes and the things you “just came to look at” before ordering anyway.
+        </p>
+        <div class="hero-actions" data-reveal="fade">
+          <button class="primary-link" type="button" data-menu-open>
+            <span>See the menu</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </button>
+          <a class="quiet-link" href="#visit">Find us in Annaba <span aria-hidden="true">↓</span></a>
         </div>
       </div>
 
-      <div class="hero-stage" aria-hidden="true">
-        <div class="sun-disc"></div>
-        <img class="hero-pancake" src="assets/pancake-stack.svg" alt="" />
-        <img class="hero-cone" src="assets/gelato-cone.svg" alt="" />
-        <div class="hero-sticker sticker-one">FRESH<br>DAILY</div>
-        <div class="hero-sticker sticker-two">ANNABA</div>
+      <div class="hero-food" aria-hidden="true">
+        <img class="food food-pancake" src="assets/pancake-stack.svg" alt="" data-parallax="0.22" />
+        <img class="food food-cone" src="assets/gelato-cone.svg" alt="" data-parallax="-0.16" />
+        <span class="scribble scribble-a" data-parallax="0.08">fresh daily</span>
+        <span class="scribble scribble-b" data-parallax="-0.10">since cravings happened</span>
       </div>
 
-      <div class="hero-scroll-hint" aria-hidden="true">
-        <span>SCROLL FOR SOMETHING SWEET</span>
-        <i></i>
-      </div>
-    </section>
-
-    <section class="ticker" aria-label="Menu highlights">
-      <div class="ticker-track">
-        <span>CRÊPES</span><b>✦</b><span>GELATO</span><b>✦</b><span>WAFFLES</span><b>✦</b><span>PANCAKES</span><b>✦</b><span>KUNAFA</span><b>✦</b><span>MILKSHAKES</span><b>✦</b>
-        <span aria-hidden="true">CRÊPES</span><b aria-hidden="true">✦</b><span aria-hidden="true">GELATO</span><b aria-hidden="true">✦</b><span aria-hidden="true">WAFFLES</span><b aria-hidden="true">✦</b><span aria-hidden="true">PANCAKES</span><b aria-hidden="true">✦</b><span aria-hidden="true">KUNAFA</span><b aria-hidden="true">✦</b><span aria-hidden="true">MILKSHAKES</span><b aria-hidden="true">✦</b>
+      <div class="hero-bottom" data-reveal="fade">
+        <span>36.9247° N · 7.7619° E</span>
+        <span>Scroll slowly — some stuff moves 👀</span>
       </div>
     </section>
 
-    <section class="favorites section-pad" id="favorites">
-      <div class="section-heading reveal">
-        <div>
-          <p class="eyebrow">START HERE</p>
-          <h2>Zoom favorites.</h2>
-        </div>
-        <p>Built from the menu you shared — big flavors, simple choices, zero boring cards.</p>
+    <section class="menu-callout" id="menu">
+      <div class="menu-callout-copy">
+        <p class="kicker" data-reveal="fade">ONE MENU. A LOT OF BAD DECISIONS.</p>
+        <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>weakness.</i></span></h2>
+        <p data-reveal="fade">The full menu stays tucked away until you want it, so the page doesn’t become a 14-kilometre scroll marathon.</p>
       </div>
 
-      <div class="favorite-grid">
-        <article class="feature-card feature-red reveal">
-          <div class="feature-topline"><span>01</span><span>CRÊPE ROYALE</span></div>
-          <div class="feature-art feature-art-crepe" aria-hidden="true">
-            <div class="crepe-fold"></div><i class="berry b1"></i><i class="berry b2"></i><i class="berry b3"></i>
-          </div>
-          <div class="feature-copy">
-            <h3>Crêpe Royale</h3>
-            <p>Chocolate, banana, pineapple, strawberry, forest fruit and ice cream.</p>
-            <strong>1000 DA</strong>
-          </div>
-        </article>
+      <button class="menu-launch" type="button" data-menu-open data-reveal="scale">
+        <span class="menu-launch-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M13 20.5h22L27.3 39a3.6 3.6 0 0 1-6.6 0L13 20.5Z"/>
+            <circle cx="18.5" cy="17" r="8"/>
+            <circle cx="28.6" cy="15.8" r="9"/>
+          </svg>
+        </span>
+        <span>
+          <small>OPEN</small>
+          <strong>Zoom’s menu</strong>
+        </span>
+        <span class="menu-launch-arrow" aria-hidden="true">↗</span>
+      </button>
 
-        <article class="feature-card feature-yellow reveal">
-          <div class="feature-topline"><span>02</span><span>DUBAI MENU</span></div>
-          <div class="feature-art" aria-hidden="true">
-            <img class="feature-waffle" src="assets/waffle.svg" alt="" />
-          </div>
-          <div class="feature-copy">
-            <h3>Crêpe Dubai</h3>
-            <p>Rich pistachio-forward dessert energy, built to be shared. Or not.</p>
-            <strong>900 DA</strong>
-          </div>
-        </article>
-
-        <article class="feature-card feature-blue reveal">
-          <div class="feature-topline"><span>03</span><span>ICE CREAM</span></div>
-          <div class="feature-art scoops-art" aria-hidden="true">
-            <i class="scoop s1"></i><i class="scoop s2"></i><i class="scoop s3"></i><i class="cone-base"></i>
-          </div>
-          <div class="feature-copy">
-            <h3>3 Scoops</h3>
-            <p>Pick from Zoom's rotating gelato flavors. Add fruit if you're feeling extra.</p>
-            <strong>500 DA</strong>
-          </div>
-        </article>
+      <div class="menu-float-art" aria-hidden="true">
+        <img src="assets/waffle.svg" alt="" data-parallax="0.18" />
       </div>
     </section>
 
-    <section class="rolling-zone" aria-hidden="true">
-      <div class="rolling-copy">
-        <span>KEEP</span><span>SCROLLING</span><span>KEEP</span><span>SCROLLING</span>
+    <section class="story" aria-label="Zoom Gelato experience">
+      <div class="story-head">
+        <p class="kicker" data-reveal="fade">THE VIBE</p>
+        <h2 data-reveal="lines"><span><i>Cold, warm,</i></span><span><i>crunchy, soft.</i></span></h2>
       </div>
-      <img class="rolling-food rolling-pancake" src="assets/pancake-stack.svg" alt="" data-roll="left" />
-      <img class="rolling-food rolling-waffle" src="assets/waffle.svg" alt="" data-roll="right" />
+
+      <div class="story-rail">
+        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe">
+          <div class="photo-placeholder">
+            <img src="assets/gelato-cone.svg" alt="" aria-hidden="true" />
+          </div>
+          <figcaption>
+            <span>PHOTO SLOT 01</span>
+            <strong>Real gelato / sundae close-up</strong>
+          </figcaption>
+        </figure>
+
+        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe">
+          <div class="photo-placeholder">
+            <img src="assets/pancake-stack.svg" alt="" aria-hidden="true" />
+          </div>
+          <figcaption>
+            <span>PHOTO SLOT 02</span>
+            <strong>Pancakes or crêpe being served</strong>
+          </figcaption>
+        </figure>
+
+        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe">
+          <div class="photo-placeholder">
+            <img src="assets/waffle.svg" alt="" aria-hidden="true" />
+          </div>
+          <figcaption>
+            <span>PHOTO SLOT 03</span>
+            <strong>Inside Zoom / counter atmosphere</strong>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="story-note" data-reveal="fade">
+        <span>Three big photo slots max on this demo.</span>
+        <span>Swap these placeholders with real Zoom photography later.</span>
+      </div>
     </section>
 
-    <section class="menu-section section-pad" id="menu">
-      <div class="menu-intro reveal">
-        <div>
-          <p class="eyebrow">THE MENU</p>
-          <h2>Pick your <span>weakness.</span></h2>
-        </div>
-        <p>Search or jump between categories. Prices are transcribed from the menu images provided for this demo.</p>
-      </div>
+    <section class="visit" id="visit">
+      <div class="visit-copy">
+        <p class="kicker" data-reveal="fade">ACTUAL MAP. FINALLY.</p>
+        <h2 data-reveal="lines"><span><i>Zoom into</i></span><span><i>Zoom.</i></span></h2>
+        <p data-reveal="fade">Interactive Google Maps embed using Zoom Gelato’s exact coordinates in Annaba.</p>
 
-      <div class="menu-controls reveal">
-        <div class="category-scroller" role="tablist" aria-label="Menu categories" data-category-tabs></div>
-        <label class="search-box">
-          <span class="sr-only">Search the menu</span>
-          <input type="search" placeholder="Search “pistache”, “crêpe”…" autocomplete="off" data-menu-search />
-          <span aria-hidden="true">⌕</span>
-        </label>
-      </div>
-
-      <div class="menu-meta">
-        <p><span data-result-count>0</span> items</p>
-        <button type="button" class="text-button" data-reset-menu>Reset filters</button>
-      </div>
-
-      <div class="menu-grid" data-menu-grid aria-live="polite"></div>
-    </section>
-
-    <section class="sundae section-pad" id="sundae">
-      <div class="sundae-shell">
-        <div class="sundae-copy reveal">
-          <p class="eyebrow">BUILD YOUR OWN</p>
-          <h2>Your sundae.<br>Your rules.</h2>
-          <p>Choose a base, size and extras. The demo keeps a running total so the flow feels like a real ordering experience.</p>
-          <div class="sundae-price">
-            <span>ESTIMATED TOTAL</span>
-            <strong><span data-sundae-total>100</span> DA</strong>
-          </div>
-        </div>
-
-        <div class="builder reveal" data-builder>
-          <div class="builder-step">
-            <div class="builder-step-head"><span>1</span><div><strong>Choose a base</strong><small>Included</small></div></div>
-            <div class="choice-row">
-              <button type="button" class="choice active" data-choice-group="base" data-price="0" data-value="Zoom Sundae">Zoom Sundae</button>
-              <button type="button" class="choice" data-choice-group="base" data-price="0" data-value="Zoom Yaourt">Zoom Yaourt</button>
-            </div>
-          </div>
-
-          <div class="builder-step">
-            <div class="builder-step-head"><span>2</span><div><strong>Choose a size</strong><small>Required</small></div></div>
-            <div class="choice-row">
-              <button type="button" class="choice active" data-choice-group="size" data-price="100" data-value="Small">S · 100 DA</button>
-              <button type="button" class="choice" data-choice-group="size" data-price="200" data-value="Medium">M · 200 DA</button>
-              <button type="button" class="choice" data-choice-group="size" data-price="300" data-value="Large">L · 300 DA</button>
-            </div>
-          </div>
-
-          <div class="builder-step">
-            <div class="builder-step-head"><span>3</span><div><strong>Add some chaos</strong><small>Optional · multi-select</small></div></div>
-            <div class="choice-row multi">
-              <button type="button" class="choice" data-extra data-price="150" data-value="Oreo">Oreo · 150</button>
-              <button type="button" class="choice" data-extra data-price="150" data-value="Kinder Bueno">Bueno · 150</button>
-              <button type="button" class="choice" data-extra data-price="250" data-value="Strawberry">Fraise · 250</button>
-              <button type="button" class="choice" data-extra data-price="300" data-value="Pistachio">Pistache · 300</button>
-            </div>
-          </div>
-
-          <div class="builder-summary">
-            <div>
-              <span>YOUR BUILD</span>
-              <strong data-build-summary>Zoom Sundae · Small</strong>
-            </div>
-            <button type="button" class="btn btn-red" data-random-build>Surprise me</button>
-          </div>
+        <div class="visit-links" data-reveal="fade">
+          <a href="https://www.google.com/maps/place/Zoom+Gelato/@36.9247015,7.7593177,17z/data=!3m1!4b1!4m6!3m5!1s0x12f0070d6bb39929:0x1eb85e9e94b9987b!8m2!3d36.9246972!4d7.7618926!16s%2Fg%2F11g8dl3wx6?coh=164777&entry=tt&shorturl=1" target="_blank" rel="noreferrer">
+            Open in Google Maps ↗
+          </a>
+          <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram ↗</a>
+          <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook ↗</a>
         </div>
       </div>
-    </section>
 
-    <section class="manifesto">
-      <div class="manifesto-word" aria-hidden="true">ZOOM</div>
-      <div class="manifesto-inner section-pad">
-        <p class="eyebrow reveal">ONE STOP. MANY CRAVINGS.</p>
-        <h2 class="reveal">CRÊPE AT 4.<br>GELATO AT 9.<br>NO JUDGEMENT.</h2>
-        <p class="reveal">From a 50 DA water to a full 1500 DA family fruit gelato cup — Zoom's menu is built for quick stops, late cravings and dessert missions with the whole group.</p>
-      </div>
-    </section>
-
-    <section class="visit section-pad" id="visit">
-      <div class="visit-card reveal">
-        <div class="visit-copy">
-          <p class="eyebrow">FIND ZOOM</p>
-          <h2>See you in<br>Annaba.</h2>
-          <p>Zoom Gelato<br>Annaba, Algeria</p>
-          <div class="visit-actions">
-            <a class="btn btn-yellow" href="https://www.google.com/maps/place/Zoom+Gelato/@36.9247015,7.7593177,17z/data=!3m1!4b1!4m6!3m5!1s0x12f0070d6bb39929:0x1eb85e9e94b9987b!8m2!3d36.9246972!4d7.7618926!16s%2Fg%2F11g8dl3wx6?coh=164777&entry=tt&shorturl=1" target="_blank" rel="noreferrer">Open in Maps <span>↗</span></a>
-            <div class="social-pair">
-              <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook ↗</a>
-              <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram ↗</a>
-            </div>
-          </div>
-        </div>
-        <div class="map-art" aria-hidden="true">
-          <div class="map-grid"></div>
-          <span class="road r1"></span><span class="road r2"></span><span class="road r3"></span>
-          <div class="map-pin"><i></i><strong>ZOOM</strong></div>
-          <span class="map-label label-a">ANNABA</span>
-          <span class="map-label label-b">36.9247° N</span>
-          <span class="map-label label-c">7.7619° E</span>
-        </div>
+      <div class="map-wrap" data-reveal="map">
+        <div class="map-curtain" aria-hidden="true"></div>
+        <iframe
+          title="Zoom Gelato on Google Maps"
+          src="https://www.google.com/maps?q=36.9246972,7.7618926&z=17&output=embed"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-brand">
-      <span class="footer-z">Z</span>
-      <div><strong>ZOOM GELATO</strong><span>ANNABA · ALGERIA</span></div>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span>ZOOM</span>
+        <small>gelato · annaba</small>
+      </div>
+
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">
+          <span>Instagram</span><b>↗</b>
+        </a>
+        <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">
+          <span>Facebook</span><b>↗</b>
+        </a>
+        <a href="https://www.google.com/maps/place/Zoom+Gelato/@36.9247015,7.7593177,17z" target="_blank" rel="noreferrer">
+          <span>Google Maps</span><b>↗</b>
+        </a>
+      </div>
     </div>
-    <p>Concept demo · Menu availability and prices should be confirmed before launch.</p>
-    <a href="#top">Back to top ↑</a>
+
+    <div class="footer-bottom">
+      <span>Concept demo for Zoom Gelato</span>
+      <button type="button" data-menu-open>Menu <span aria-hidden="true">🍦</span></button>
+      <a href="#top">Back to top ↑</a>
+    </div>
   </footer>
 </body>
 </html>
