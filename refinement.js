@@ -12,8 +12,8 @@
       filter:none !important;
     }
 
-    /* Speed stretch + motion blur still happen here, but rotation does NOT.
-       That keeps the crêpe fixed while the pancake gets its own spin. */
+    /* The parent can stretch/blur with pointer speed, but it NEVER rotates.
+       Rotation belongs only to the pancake itself. */
     .cursor-shape{
       inset:-14px !important;
       width:auto !important;
@@ -35,13 +35,13 @@
       box-shadow:none !important;
       filter:drop-shadow(0 4px 4px rgba(50,24,15,.18)) !important;
       opacity:1;
-      transform:scale(var(--pancake-scale,1)) rotate(var(--pancake-spin,0deg)) !important;
-      transform-origin:50% 50%;
+      transform:scale(1) rotate(0deg) !important;
+      transform-origin:50% 50% !important;
       transition:opacity 150ms ease !important;
       will-change:transform,opacity;
     }
 
-    /* The crêpe NEVER follows pointer direction. It is permanently angled -32deg. */
+    /* The crêpe is fixed at -32deg. Pointer movement must never alter this angle. */
     .crepe-cursor-shape{
       inset:2px !important;
       overflow:visible !important;
@@ -53,7 +53,7 @@
       filter:drop-shadow(0 5px 5px rgba(50,24,15,.2)) !important;
       opacity:0;
       transform:scale(.58) rotate(-32deg) !important;
-      transform-origin:50% 58%;
+      transform-origin:50% 58% !important;
       transition:opacity 150ms ease,transform 220ms cubic-bezier(.22,1,.36,1) !important;
       will-change:transform,opacity;
     }
@@ -65,7 +65,6 @@
 
     .ice-cursor.hover .waffle-cursor-shape{
       opacity:0 !important;
-      --pancake-scale:.46;
     }
 
     .ice-cursor.hover .crepe-cursor-shape{
@@ -162,32 +161,66 @@
 
   if (!finePointer || reducedMotion) return;
 
-  /* Pancake-only rolling rotation. We write the transform variable DIRECTLY on
-     the pancake element, so no inherited cursor transform can cancel it out. */
+  /*
+    Pancake-only rolling motion.
+    Important details:
+    - Uses pointermove universally (including Firefox) instead of relying on
+      pointerrawupdate support detection.
+    - Never derives rotation from pointer direction, so there are no sudden
+      180-degree angle flips.
+    - Writes an INLINE !important transform directly onto the pancake. This
+      beats every older cursor rule in the cascade, so the spin is visible.
+    - The crêpe also receives an inline !important transform locked to -32deg.
+  */
   const cursor = document.querySelector('#iceCursor');
   const pancake = cursor?.querySelector('.waffle-cursor-shape');
+  const crepe = cursor?.querySelector('.crepe-cursor-shape');
 
-  if (cursor && pancake) {
+  if (cursor && pancake && crepe) {
     let lastX = null;
     let lastY = null;
     let lastTime = performance.now();
-    let lastMoveTime = lastTime;
     let rotation = 0;
     let angularVelocity = 0;
+    let targetVelocity = 0;
     let spinRAF = 0;
 
-    const paintSpin = now => {
+    const lockCrepe = () => {
+      const scale = cursor.classList.contains('hover') ? .96 : .58;
+      crepe.style.setProperty(
+        'transform',
+        `scale(${scale}) rotate(-32deg)`,
+        'important'
+      );
+    };
+
+    const applyPancake = () => {
+      const scale = cursor.classList.contains('hover') ? .46 : 1;
+      pancake.style.setProperty(
+        'transform',
+        `scale(${scale}) rotate(${rotation.toFixed(2)}deg)`,
+        'important'
+      );
+    };
+
+    const spinFrame = () => {
       spinRAF = 0;
 
+      /* Ease toward the target speed so individual mouse events cannot create
+         visible rotation jumps. */
+      angularVelocity += (targetVelocity - angularVelocity) * .16;
       rotation = (rotation + angularVelocity) % 360;
 
-      const idleFor = now - lastMoveTime;
-      angularVelocity *= idleFor > 55 ? .89 : .965;
+      /* Movement energy fades gradually after the pointer stops. */
+      targetVelocity *= .86;
+      if (targetVelocity < .006) targetVelocity = 0;
+      if (Math.abs(angularVelocity) < .006 && targetVelocity === 0) angularVelocity = 0;
 
-      pancake.style.setProperty('--pancake-spin', `${rotation.toFixed(2)}deg`);
+      applyPancake();
+      lockCrepe();
 
-      if (Math.abs(angularVelocity) > .01) {
-        spinRAF = requestAnimationFrame(paintSpin);
+      if (angularVelocity !== 0 || targetVelocity !== 0) {
+        spinRAF = requestAnimationFrame(spinFrame);
       }
     };
 
@@ -198,16 +231,15 @@
         const dx = event.clientX - lastX;
         const dy = event.clientY - lastY;
         const distance = Math.hypot(dx, dy);
-        const dt = Math.max(6, now - lastTime);
+        const dt = Math.max(7, now - lastTime);
         const speed = distance / dt;
 
-        /* Movement adds spin energy smoothly. It always rolls in one stable
-           direction, avoiding sudden clockwise/counter-clockwise flips. */
-        if (distance > .15) {
-          const impulse = Math.min(3.1, distance * .03 + speed * .55);
-          angularVelocity = Math.min(6.2, angularVelocity * .78 + impulse);
-          lastMoveTime = now;
-          if (!spinRAF) spinRAF = requestAnimationFrame(paintSpin);
+        /* Total travel distance controls rolling speed. Direction is deliberately
+           ignored, making the motion stable and smooth instead of twitchy. */
+        if (distance > .1) {
+          const movementVelocity = Math.min(7.2, distance * .07 + speed * 1.35);
+          targetVelocity = Math.max(targetVelocity, movementVelocity);
+          if (!spinRAF) spinRAF = requestAnimationFrame(spinFrame);
         }
       }
 
@@ -216,8 +248,23 @@
       lastTime = now;
     };
 
-    const cursorPointerEvent = 'onpointerrawupdate' in window ? 'pointerrawupdate' : 'pointermove';
-    addEventListener(cursorPointerEvent, feedSpin, { passive:true });
+    /* Always use pointermove here. It is reliable across the desktop browsers
+       this site targets and avoids raw-event support quirks. */
+    addEventListener('pointermove', feedSpin, { passive:true });
+
+    /* Hover can change without another movement event. Re-apply both transforms
+       immediately whenever the cursor switches pancake <-> crêpe. */
+    const cursorStateObserver = new MutationObserver(() => {
+      applyPancake();
+      lockCrepe();
+    });
+    cursorStateObserver.observe(cursor, {
+      attributes:true,
+      attributeFilter:['class']
+    });
+
+    applyPancake();
+    lockCrepe();
   }
 
   const surfaces = document.querySelectorAll(
