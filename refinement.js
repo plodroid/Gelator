@@ -1,4 +1,72 @@
 (() => {
+  /* Final cursor geometry overrides. The older stylesheet used paint containment,
+     which clipped any cursor art extending past the small hit box. */
+  const cursorStyle = document.createElement('style');
+  cursorStyle.id = 'zoom-cursor-final-fix';
+  cursorStyle.textContent = `
+    .ice-cursor{
+      width:44px !important;
+      height:44px !important;
+      contain:none !important;
+      overflow:visible !important;
+      filter:none !important;
+    }
+
+    .cursor-shape{
+      inset:-14px !important;
+      width:auto !important;
+      height:auto !important;
+      overflow:visible !important;
+      contain:none !important;
+      transform-origin:50% 50% !important;
+    }
+
+    /* Legacy class name; this is the uploaded pancake image now. */
+    .waffle-cursor-shape{
+      inset:5px !important;
+      overflow:visible !important;
+      border:0 !important;
+      border-radius:50% !important;
+      clip-path:none !important;
+      background:url("assets/pancake%20nobg.png") center / contain no-repeat !important;
+      box-shadow:none !important;
+      filter:drop-shadow(0 4px 4px rgba(50,24,15,.18)) !important;
+      opacity:1;
+      transform:scale(1) rotate(0deg);
+      transform-origin:50% 50%;
+    }
+
+    .crepe-cursor-shape{
+      inset:2px !important;
+      overflow:visible !important;
+      border:0 !important;
+      border-radius:0 !important;
+      clip-path:polygon(50% 0%,100% 100%,0% 100%) !important;
+      background:url("assets/crepsSliceFacingUp.png") center / 100% 100% no-repeat !important;
+      box-shadow:none !important;
+      filter:drop-shadow(0 5px 5px rgba(50,24,15,.2)) !important;
+      opacity:0;
+      transform:scale(.58) rotate(32deg) !important;
+      transform-origin:50% 58%;
+    }
+
+    .ice-cursor.hover{
+      width:48px !important;
+      height:48px !important;
+    }
+
+    .ice-cursor.hover .waffle-cursor-shape{
+      opacity:0 !important;
+      transform:scale(.46) rotate(20deg) !important;
+    }
+
+    .ice-cursor.hover .crepe-cursor-shape{
+      opacity:1 !important;
+      transform:scale(.96) rotate(32deg) !important;
+    }
+  `;
+  document.head.appendChild(cursorStyle);
+
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
   const video = document.querySelector('.reel-video');
