@@ -1,10 +1,11 @@
 (() => {
-  /* Final cursor geometry overrides. The older stylesheet used paint containment,
-     which clipped any cursor art extending past the small hit box. */
+  /* Final cursor geometry overrides. Keep the pointer art outside the tiny hit box
+     so the uploaded PNGs stay fully visible instead of getting clipped. */
   const cursorStyle = document.createElement('style');
   cursorStyle.id = 'zoom-cursor-final-fix';
   cursorStyle.textContent = `
     .ice-cursor{
+      --pancake-spin:0deg;
       width:44px !important;
       height:44px !important;
       contain:none !important;
@@ -12,16 +13,19 @@
       filter:none !important;
     }
 
+    /* Speed stretch + motion blur still happen here, but rotation does NOT.
+       That keeps the crêpe fixed while the pancake gets its own spin. */
     .cursor-shape{
       inset:-14px !important;
       width:auto !important;
       height:auto !important;
       overflow:visible !important;
       contain:none !important;
+      transform:scale(var(--sx,1),var(--sy,1)) !important;
       transform-origin:50% 50% !important;
     }
 
-    /* Legacy class name; this is the uploaded pancake image now. */
+    /* Legacy class name; visually this is the uploaded pancake cursor. */
     .waffle-cursor-shape{
       inset:5px !important;
       overflow:visible !important;
@@ -32,10 +36,13 @@
       box-shadow:none !important;
       filter:drop-shadow(0 4px 4px rgba(50,24,15,.18)) !important;
       opacity:1;
-      transform:scale(1) rotate(0deg);
+      transform:scale(1) rotate(var(--pancake-spin)) !important;
       transform-origin:50% 50%;
+      transition:opacity 150ms ease !important;
+      will-change:transform,opacity;
     }
 
+    /* The crêpe never follows pointer direction. It stays at one useful cursor angle. */
     .crepe-cursor-shape{
       inset:2px !important;
       overflow:visible !important;
@@ -48,6 +55,8 @@
       opacity:0;
       transform:scale(.58) rotate(32deg) !important;
       transform-origin:50% 58%;
+      transition:opacity 150ms ease,transform 220ms cubic-bezier(.22,1,.36,1) !important;
+      will-change:transform,opacity;
     }
 
     .ice-cursor.hover{
@@ -57,12 +66,25 @@
 
     .ice-cursor.hover .waffle-cursor-shape{
       opacity:0 !important;
-      transform:scale(.46) rotate(20deg) !important;
+      transform:scale(.46) rotate(var(--pancake-spin)) !important;
     }
 
     .ice-cursor.hover .crepe-cursor-shape{
       opacity:1 !important;
       transform:scale(.96) rotate(32deg) !important;
+    }
+
+    /* Keep the video silent without repeatedly advertising that in the UI. */
+    .reel-muted-badge{
+      display:none !important;
+    }
+
+    .reel-note span:first-child{
+      display:none !important;
+    }
+
+    .reel-note{
+      justify-content:flex-end !important;
     }
   `;
   document.head.appendChild(cursorStyle);
@@ -129,7 +151,8 @@
     setTimeout(keepPlaying, 1100);
   }
 
-  /* Give each image card a blurred copy behind the sharp, fully-contained image. */
+  /* Leave the working image-card fit exactly as-is. Only provide its existing
+     background copy for the subtle blurred empty-space treatment. */
   document.querySelectorAll('.photo-image-shell').forEach(shell => {
     const image = shell.querySelector('img');
     if (!image) return;
@@ -139,6 +162,64 @@
   });
 
   if (!finePointer || reducedMotion) return;
+
+  /* Pancake spin uses movement energy instead of pointer angle. This gives it
+     inertia and removes 180-degree direction flips / micro-jitter. */
+  const cursor = document.querySelector('#iceCursor');
+  if (cursor) {
+    let lastX = null;
+    let lastY = null;
+    let lastTime = performance.now();
+    let lastMoveTime = lastTime;
+    let rotation = 0;
+    let angularVelocity = 0;
+    let spinRAF = 0;
+
+    const paintSpin = now => {
+      spinRAF = 0;
+
+      rotation += angularVelocity;
+      if (rotation > 36000) rotation %= 360;
+
+      const idleFor = now - lastMoveTime;
+      angularVelocity *= idleFor > 45 ? .88 : .955;
+
+      cursor.style.setProperty('--pancake-spin', `${rotation.toFixed(2)}deg`);
+
+      if (Math.abs(angularVelocity) > .015) {
+        spinRAF = requestAnimationFrame(paintSpin);
+      }
+    };
+
+    const feedSpin = event => {
+      const now = performance.now();
+
+      if (lastX !== null && !cursor.classList.contains('hover')) {
+        const dx = event.clientX - lastX;
+        const dy = event.clientY - lastY;
+        const distance = Math.hypot(dx, dy);
+        const dt = Math.max(6, now - lastTime);
+        const speed = distance / dt;
+
+        /* Faster pointer movement adds more rotational energy, but the cap and
+           inertia keep the result calm instead of snapping between angles. */
+        const impulse = Math.min(2.8, distance * .024 + speed * .46);
+        angularVelocity = Math.min(5.4, angularVelocity * .72 + impulse);
+        lastMoveTime = now;
+
+        if (!spinRAF) spinRAF = requestAnimationFrame(paintSpin);
+      } else if (cursor.classList.contains('hover')) {
+        angularVelocity *= .72;
+      }
+
+      lastX = event.clientX;
+      lastY = event.clientY;
+      lastTime = now;
+    };
+
+    const cursorPointerEvent = 'onpointerrawupdate' in window ? 'pointerrawupdate' : 'pointermove';
+    addEventListener(cursorPointerEvent, feedSpin, { passive:true });
+  }
 
   const surfaces = document.querySelectorAll(
     '.photo-frame, .reel-device, .menu-launch, .primary-link, .menu-trigger, .wordmark, .menu-row'
@@ -173,7 +254,6 @@
       nextX = Math.max(0, Math.min(100, nx * 100));
       nextY = Math.max(0, Math.min(100, ny * 100));
 
-      /* Tiny magnetic pull: enough to feel responsive, not enough to look gimmicky. */
       const strength = surface.matches('.primary-link,.menu-trigger,.menu-launch,.wordmark') ? 3.2 : 1.6;
       pullX = (nx - .5) * strength * 2;
       pullY = (ny - .5) * strength * 2;
