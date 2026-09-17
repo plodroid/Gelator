@@ -5,7 +5,6 @@
   cursorStyle.id = 'zoom-cursor-final-fix';
   cursorStyle.textContent = `
     .ice-cursor{
-      --pancake-spin:0deg;
       width:44px !important;
       height:44px !important;
       contain:none !important;
@@ -36,13 +35,13 @@
       box-shadow:none !important;
       filter:drop-shadow(0 4px 4px rgba(50,24,15,.18)) !important;
       opacity:1;
-      transform:scale(1) rotate(var(--pancake-spin)) !important;
+      transform:scale(var(--pancake-scale,1)) rotate(var(--pancake-spin,0deg)) !important;
       transform-origin:50% 50%;
       transition:opacity 150ms ease !important;
       will-change:transform,opacity;
     }
 
-    /* The crêpe never follows pointer direction. It stays at one useful cursor angle. */
+    /* The crêpe NEVER follows pointer direction. It is permanently angled -32deg. */
     .crepe-cursor-shape{
       inset:2px !important;
       overflow:visible !important;
@@ -53,7 +52,7 @@
       box-shadow:none !important;
       filter:drop-shadow(0 5px 5px rgba(50,24,15,.2)) !important;
       opacity:0;
-      transform:scale(.58) rotate(32deg) !important;
+      transform:scale(.58) rotate(-32deg) !important;
       transform-origin:50% 58%;
       transition:opacity 150ms ease,transform 220ms cubic-bezier(.22,1,.36,1) !important;
       will-change:transform,opacity;
@@ -66,12 +65,12 @@
 
     .ice-cursor.hover .waffle-cursor-shape{
       opacity:0 !important;
-      transform:scale(.46) rotate(var(--pancake-spin)) !important;
+      --pancake-scale:.46;
     }
 
     .ice-cursor.hover .crepe-cursor-shape{
       opacity:1 !important;
-      transform:scale(.96) rotate(32deg) !important;
+      transform:scale(.96) rotate(-32deg) !important;
     }
 
     /* Keep the video silent without repeatedly advertising that in the UI. */
@@ -163,10 +162,12 @@
 
   if (!finePointer || reducedMotion) return;
 
-  /* Pancake spin uses movement energy instead of pointer angle. This gives it
-     inertia and removes 180-degree direction flips / micro-jitter. */
+  /* Pancake-only rolling rotation. We write the transform variable DIRECTLY on
+     the pancake element, so no inherited cursor transform can cancel it out. */
   const cursor = document.querySelector('#iceCursor');
-  if (cursor) {
+  const pancake = cursor?.querySelector('.waffle-cursor-shape');
+
+  if (cursor && pancake) {
     let lastX = null;
     let lastY = null;
     let lastTime = performance.now();
@@ -178,15 +179,14 @@
     const paintSpin = now => {
       spinRAF = 0;
 
-      rotation += angularVelocity;
-      if (rotation > 36000) rotation %= 360;
+      rotation = (rotation + angularVelocity) % 360;
 
       const idleFor = now - lastMoveTime;
-      angularVelocity *= idleFor > 45 ? .88 : .955;
+      angularVelocity *= idleFor > 55 ? .89 : .965;
 
-      cursor.style.setProperty('--pancake-spin', `${rotation.toFixed(2)}deg`);
+      pancake.style.setProperty('--pancake-spin', `${rotation.toFixed(2)}deg`);
 
-      if (Math.abs(angularVelocity) > .015) {
+      if (Math.abs(angularVelocity) > .01) {
         spinRAF = requestAnimationFrame(paintSpin);
       }
     };
@@ -194,22 +194,21 @@
     const feedSpin = event => {
       const now = performance.now();
 
-      if (lastX !== null && !cursor.classList.contains('hover')) {
+      if (lastX !== null) {
         const dx = event.clientX - lastX;
         const dy = event.clientY - lastY;
         const distance = Math.hypot(dx, dy);
         const dt = Math.max(6, now - lastTime);
         const speed = distance / dt;
 
-        /* Faster pointer movement adds more rotational energy, but the cap and
-           inertia keep the result calm instead of snapping between angles. */
-        const impulse = Math.min(2.8, distance * .024 + speed * .46);
-        angularVelocity = Math.min(5.4, angularVelocity * .72 + impulse);
-        lastMoveTime = now;
-
-        if (!spinRAF) spinRAF = requestAnimationFrame(paintSpin);
-      } else if (cursor.classList.contains('hover')) {
-        angularVelocity *= .72;
+        /* Movement adds spin energy smoothly. It always rolls in one stable
+           direction, avoiding sudden clockwise/counter-clockwise flips. */
+        if (distance > .15) {
+          const impulse = Math.min(3.1, distance * .03 + speed * .55);
+          angularVelocity = Math.min(6.2, angularVelocity * .78 + impulse);
+          lastMoveTime = now;
+          if (!spinRAF) spinRAF = requestAnimationFrame(paintSpin);
+        }
       }
 
       lastX = event.clientX;
