@@ -1,8 +1,64 @@
-/* Final polish layer: keeps the existing design, but tightens media fitting and interaction. */
+/* Final interaction / media polish. Kept intentionally restrained: clear first, fun second. */
 
-/* ----- gallery: always show the full uploaded image ----- */
+:root{
+  --soft-ease:cubic-bezier(.22,1,.36,1);
+  --ios-ease:cubic-bezier(.32,.72,0,1);
+}
+
+/* ---------- cleaner motion ---------- */
+.photo-frame,
+.reel-device,
+.menu-launch,
+.primary-link,
+.menu-trigger,
+.wordmark,
+.visit-links a,
+.footer-socials a,
+.header-socials a{
+  --mx:50%;
+  --my:50%;
+  --pull-x:0px;
+  --pull-y:0px;
+  translate:var(--pull-x) var(--pull-y);
+}
+
+.primary-link,
+.menu-trigger,
+.menu-launch,
+.reel-device,
+.photo-frame{
+  transition-timing-function:var(--soft-ease) !important;
+}
+
+.primary-link,
+.menu-trigger,
+.menu-launch,
+.quiet-link,
+.footer-socials a,
+.visit-links a,
+.header-socials a,
+.wordmark,
+.photo-frame,
+.reel-device{
+  -webkit-tap-highlight-color:transparent;
+}
+
+.primary-link:active,
+.menu-trigger:active,
+.menu-launch:active{
+  scale:.97;
+  transition-duration:90ms !important;
+}
+
+/* ---------- uploaded images: full image is ALWAYS visible ---------- */
 .story-gallery{
   align-items:start;
+  gap:18px;
+}
+
+.photo-frame{
+  min-width:0;
+  cursor:zoom-in;
 }
 
 .photo-image-shell,
@@ -10,50 +66,108 @@
 .frame-b .photo-image-shell,
 .frame-c .photo-image-shell,
 .frame-d .photo-image-shell{
+  position:relative;
+  isolation:isolate;
   width:100%;
   height:auto !important;
   min-height:0 !important;
-  aspect-ratio:auto !important;
-  display:block;
+  aspect-ratio:4 / 5 !important;
+  display:grid;
+  place-items:center;
   overflow:hidden;
-  padding:8px;
+  padding:12px;
+  border:1px solid rgba(33,24,22,.08);
   border-radius:20px;
-  background:rgba(255,255,255,.7);
-  box-shadow:0 16px 42px rgba(72,31,24,.08);
-  transition:box-shadow 360ms cubic-bezier(.22,1,.36,1), transform 360ms cubic-bezier(.22,1,.36,1);
+  background:rgba(255,255,255,.72);
+  box-shadow:0 14px 38px rgba(72,31,24,.075);
+  transition:
+    transform 420ms var(--soft-ease),
+    box-shadow 420ms var(--soft-ease),
+    border-color 260ms ease;
+}
+
+/* blurred copy only fills the empty space; the actual photo above stays crisp + uncropped */
+.photo-image-shell::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:-10%;
+  background-image:var(--photo-bg,none);
+  background-size:cover;
+  background-position:center;
+  filter:blur(24px) saturate(.9);
+  opacity:.12;
+  transform:scale(1.08);
+  transition:opacity 420ms ease,transform 700ms var(--soft-ease);
+  pointer-events:none;
+}
+
+.photo-image-shell::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.32),transparent 31%);
+  transition:opacity 260ms ease;
 }
 
 .photo-image-shell img{
+  position:relative;
+  z-index:1;
   display:block;
   width:100% !important;
-  height:auto !important;
+  height:100% !important;
   max-width:100% !important;
-  max-height:none !important;
+  max-height:100% !important;
   object-fit:contain !important;
   object-position:center center !important;
   padding:0 !important;
   border-radius:14px;
   transform:none !important;
+  filter:none !important;
+  box-shadow:0 8px 24px rgba(50,23,18,.08);
 }
 
 .photo-frame:hover .photo-image-shell{
-  transform:translateY(-3px);
-  box-shadow:0 22px 56px rgba(72,31,24,.13);
+  transform:translateY(-4px);
+  border-color:rgba(33,24,22,.13);
+  box-shadow:0 22px 58px rgba(72,31,24,.12);
 }
 
-.photo-frame:hover .photo-image-shell img{
-  transform:none !important;
+.photo-frame:hover .photo-image-shell::before{
+  opacity:.19;
+  transform:scale(1.12);
+}
+
+.photo-frame:hover .photo-image-shell::after{
+  opacity:1;
 }
 
 .photo-frame figcaption{
-  transition:transform 300ms cubic-bezier(.22,1,.36,1), color 220ms ease;
+  transition:transform 320ms var(--soft-ease),color 220ms ease;
 }
 
 .photo-frame:hover figcaption{
   transform:translateY(-2px);
 }
 
-/* ----- real uploaded pancake art ----- */
+.photo-frame:focus-visible{
+  outline:0;
+}
+
+.photo-frame:focus-visible .photo-image-shell{
+  box-shadow:0 0 0 3px rgba(37,150,190,.22),0 20px 54px rgba(72,31,24,.12);
+}
+
+/* hero uses the uploaded transparent pancake, while keeping the photo itself fully visible */
+.hero-photo{
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
 .food-pancake-real{
   z-index:3;
   width:min(19vw,250px);
@@ -61,9 +175,10 @@
   bottom:0;
   object-fit:contain;
   filter:drop-shadow(0 22px 28px rgba(66,31,22,.18));
+  will-change:transform;
 }
 
-/* ----- native Reel player ----- */
+/* ---------- native Reel: autoplay + permanently silent + seamless visual loop ---------- */
 .reel-embed-wrap{
   position:relative;
   aspect-ratio:9 / 16 !important;
@@ -82,13 +197,17 @@
   background:#0b0908;
   pointer-events:none;
   user-select:none;
+  -webkit-user-select:none;
 }
 
 .reel-device{
   position:relative;
   isolation:isolate;
   cursor:pointer;
-  transition:transform 380ms cubic-bezier(.22,1,.36,1), box-shadow 380ms cubic-bezier(.22,1,.36,1);
+  transition:
+    transform 420ms var(--soft-ease),
+    box-shadow 420ms var(--soft-ease),
+    border-color 260ms ease;
 }
 
 .reel-device::after{
@@ -99,43 +218,47 @@
   border-radius:29px;
   pointer-events:none;
   opacity:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.2),transparent 34%);
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.22),transparent 33%);
   transition:opacity 260ms ease;
 }
 
 .reel-device:hover{
-  transform:translateY(-4px) scale(1.008);
-  box-shadow:0 36px 90px rgba(88,59,0,.2), inset 1px 1px 0 rgba(255,255,255,.72);
+  transform:translateY(-5px) scale(1.008);
+  box-shadow:0 38px 94px rgba(88,59,0,.19),inset 1px 1px 0 rgba(255,255,255,.72);
 }
 
-.reel-device:hover::after{
-  opacity:1;
-}
+.reel-device:hover::after{opacity:1}
 
 .reel-muted-badge{
   pointer-events:none;
+  -webkit-backdrop-filter:blur(10px) saturate(130%);
+  backdrop-filter:blur(10px) saturate(130%);
 }
 
-/* ----- actual waffle -> actual crepe cursor ----- */
+/* ---------- cursor: PANCAKE normally -> uploaded crêpe slice on hover ---------- */
 .ice-cursor{
-  width:28px;
-  height:28px;
+  width:32px;
+  height:32px;
+  filter:none;
 }
 
 .cursor-shape{
-  filter:blur(var(--motion-blur,0px));
+  filter:drop-shadow(0 4px 5px rgba(50,24,15,.18)) blur(var(--motion-blur,0px));
+  transition:filter 80ms linear;
 }
 
+/* class name is legacy from the first version; visually this is now the pancake cursor */
 .waffle-cursor-shape{
-  inset:0 !important;
+  inset:-4px !important;
+  border:0 !important;
   border-radius:50% !important;
-  border:1px solid rgba(113,65,20,.3) !important;
   clip-path:none !important;
-  background:
-    linear-gradient(45deg,transparent 42%,rgba(117,68,24,.34) 43% 49%,transparent 50%) 0 0/8px 8px,
-    linear-gradient(-45deg,transparent 42%,rgba(117,68,24,.28) 43% 49%,transparent 50%) 0 0/8px 8px,
-    #e3a54b !important;
-  box-shadow:inset 2px 2px 0 rgba(255,239,196,.32), inset -3px -3px 0 rgba(102,54,14,.12), 0 4px 10px rgba(55,27,18,.18) !important;
+  background:url("assets/pancake%20nobg.png") center / contain no-repeat !important;
+  box-shadow:none !important;
+  opacity:1;
+  transform:scale(1) rotate(0deg);
+  filter:drop-shadow(0 3px 3px rgba(56,28,18,.16));
+  transition:opacity 150ms ease,transform 240ms var(--soft-ease) !important;
 }
 
 .crepe-cursor-shape{
@@ -147,17 +270,18 @@
   box-shadow:none !important;
   filter:drop-shadow(0 5px 5px rgba(50,24,15,.2));
   opacity:0;
-  transform:scale(.62) rotate(-14deg);
+  transform:scale(.56) rotate(-16deg);
+  transition:opacity 150ms ease,transform 240ms var(--soft-ease) !important;
 }
 
 .ice-cursor.hover{
-  width:34px;
-  height:34px;
+  width:36px;
+  height:36px;
 }
 
 .ice-cursor.hover .waffle-cursor-shape{
   opacity:0;
-  transform:scale(.48) rotate(24deg);
+  transform:scale(.46) rotate(24deg);
 }
 
 .ice-cursor.hover .crepe-cursor-shape{
@@ -165,64 +289,136 @@
   transform:scale(1) rotate(0deg);
 }
 
-/* ----- clearer, more tactile interaction ----- */
-.primary-link,
-.menu-trigger,
-.menu-launch,
-.quiet-link,
-.footer-socials a,
-.visit-links a,
-.header-socials a{
-  -webkit-tap-highlight-color:transparent;
-}
-
-.primary-link:active,
-.menu-trigger:active,
-.menu-launch:active{
-  transform:scale(.97) !important;
-  transition-duration:90ms !important;
-}
-
-.photo-frame,
-.reel-device,
-.menu-launch,
-.primary-link,
-.menu-trigger{
-  --mx:50%;
-  --my:50%;
-}
-
-.photo-image-shell{
+/* ---------- menus / links feel alive without turning into a toy UI ---------- */
+.menu-row{
   position:relative;
+  transition:background-color 220ms ease,padding-left 260ms var(--soft-ease),padding-right 260ms var(--soft-ease);
 }
 
-.photo-image-shell::after{
+.menu-row::after{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
-  border-radius:inherit;
   opacity:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 30%);
-  transition:opacity 240ms ease;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(205,41,32,.07),transparent 40%);
+  transition:opacity 220ms ease;
 }
 
-.photo-frame:hover .photo-image-shell::after{
-  opacity:1;
+.menu-row:hover{
+  padding-left:10px;
+  padding-right:10px;
+  background:rgba(205,41,32,.025);
 }
 
+.menu-row:hover::after{opacity:1}
+
+.menu-row-price{
+  transition:color 200ms ease,transform 280ms var(--soft-ease);
+}
+
+.menu-row:hover .menu-row-price{
+  color:var(--red);
+  transform:translateX(-2px);
+}
+
+.menu-launch,
+.primary-link,
+.menu-trigger{
+  isolation:isolate;
+}
+
+.menu-launch::after,
+.primary-link::before,
+.menu-trigger::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.32),transparent 42%);
+  transition:opacity 220ms ease;
+}
+
+.menu-launch:hover::after,
+.primary-link:hover::before,
+.menu-trigger:hover::before{opacity:1}
+
+.visit-links a,
+.footer-socials a,
+.header-socials a,
+.quiet-link,
+.reel-link{
+  transition:color 220ms ease,opacity 220ms ease,translate 280ms var(--soft-ease);
+}
+
+.visit-links a:hover,
+.footer-socials a:hover,
+.header-socials a:hover,
+.quiet-link:hover,
+.reel-link:hover{
+  translate:2px 0;
+}
+
+.wordmark:hover{
+  translate:0 -1px;
+}
+
+.map-wrap{
+  transition:transform 520ms var(--soft-ease),box-shadow 520ms var(--soft-ease);
+}
+
+.map-wrap:hover{
+  transform:translateY(-3px);
+  box-shadow:0 26px 70px rgba(0,0,0,.16);
+}
+
+/* ---------- lightbox ---------- */
 .lightbox-backdrop{
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(12px) saturate(110%);
+  backdrop-filter:blur(12px) saturate(110%);
+}
+
+.lightbox-panel{
+  -webkit-backdrop-filter:blur(16px) saturate(120%);
+  backdrop-filter:blur(16px) saturate(120%);
+}
+
+.lightbox-panel img{
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .story-gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
 }
 
 @media(max-width:720px){
+  .story-gallery{
+    display:flex !important;
+    gap:12px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    margin-inline:-18px;
+    padding:0 18px 10px;
+  }
+
+  .story-gallery::-webkit-scrollbar{display:none}
+
   .story-gallery .photo-frame,
   .story-gallery .frame-a,
   .story-gallery .frame-b,
   .story-gallery .frame-c,
   .story-gallery .frame-d{
     flex:0 0 min(82vw,340px);
+    scroll-snap-align:center;
   }
 
   .photo-image-shell,
@@ -230,6 +426,7 @@
   .frame-b .photo-image-shell,
   .frame-c .photo-image-shell,
   .frame-d .photo-image-shell{
+    aspect-ratio:4 / 5 !important;
     height:auto !important;
     max-height:none !important;
   }
@@ -239,15 +436,31 @@
     left:0;
   }
 
-  .reel-device:hover{
+  .reel-device:hover,
+  .map-wrap:hover,
+  .photo-frame:hover .photo-image-shell{
     transform:none;
+  }
+}
+
+@media(hover:none),(pointer:coarse){
+  .photo-frame:hover .photo-image-shell::before,
+  .photo-frame:hover .photo-image-shell::after,
+  .reel-device:hover::after{
+    opacity:initial;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
   .photo-image-shell,
+  .photo-image-shell::before,
+  .photo-frame figcaption,
   .reel-device,
-  .photo-frame figcaption{
+  .map-wrap,
+  .menu-row,
+  .menu-row-price{
     transition:none !important;
   }
+
+  .reel-muted-badge span:last-child{animation:none !important}
 }
