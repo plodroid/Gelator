@@ -1,0 +1,253 @@
+/* Final polish layer: keeps the existing design, but tightens media fitting and interaction. */
+
+/* ----- gallery: always show the full uploaded image ----- */
+.story-gallery{
+  align-items:start;
+}
+
+.photo-image-shell,
+.frame-a .photo-image-shell,
+.frame-b .photo-image-shell,
+.frame-c .photo-image-shell,
+.frame-d .photo-image-shell{
+  width:100%;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  display:block;
+  overflow:hidden;
+  padding:8px;
+  border-radius:20px;
+  background:rgba(255,255,255,.7);
+  box-shadow:0 16px 42px rgba(72,31,24,.08);
+  transition:box-shadow 360ms cubic-bezier(.22,1,.36,1), transform 360ms cubic-bezier(.22,1,.36,1);
+}
+
+.photo-image-shell img{
+  display:block;
+  width:100% !important;
+  height:auto !important;
+  max-width:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:0 !important;
+  border-radius:14px;
+  transform:none !important;
+}
+
+.photo-frame:hover .photo-image-shell{
+  transform:translateY(-3px);
+  box-shadow:0 22px 56px rgba(72,31,24,.13);
+}
+
+.photo-frame:hover .photo-image-shell img{
+  transform:none !important;
+}
+
+.photo-frame figcaption{
+  transition:transform 300ms cubic-bezier(.22,1,.36,1), color 220ms ease;
+}
+
+.photo-frame:hover figcaption{
+  transform:translateY(-2px);
+}
+
+/* ----- real uploaded pancake art ----- */
+.food-pancake-real{
+  z-index:3;
+  width:min(19vw,250px);
+  left:-1%;
+  bottom:0;
+  object-fit:contain;
+  filter:drop-shadow(0 22px 28px rgba(66,31,22,.18));
+}
+
+/* ----- native Reel player ----- */
+.reel-embed-wrap{
+  position:relative;
+  aspect-ratio:9 / 16 !important;
+  overflow:hidden;
+  background:#0b0908;
+}
+
+.reel-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  background:#0b0908;
+  pointer-events:none;
+  user-select:none;
+}
+
+.reel-device{
+  position:relative;
+  isolation:isolate;
+  cursor:pointer;
+  transition:transform 380ms cubic-bezier(.22,1,.36,1), box-shadow 380ms cubic-bezier(.22,1,.36,1);
+}
+
+.reel-device::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  z-index:4;
+  border-radius:29px;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.2),transparent 34%);
+  transition:opacity 260ms ease;
+}
+
+.reel-device:hover{
+  transform:translateY(-4px) scale(1.008);
+  box-shadow:0 36px 90px rgba(88,59,0,.2), inset 1px 1px 0 rgba(255,255,255,.72);
+}
+
+.reel-device:hover::after{
+  opacity:1;
+}
+
+.reel-muted-badge{
+  pointer-events:none;
+}
+
+/* ----- actual waffle -> actual crepe cursor ----- */
+.ice-cursor{
+  width:28px;
+  height:28px;
+}
+
+.cursor-shape{
+  filter:blur(var(--motion-blur,0px));
+}
+
+.waffle-cursor-shape{
+  inset:0 !important;
+  border-radius:50% !important;
+  border:1px solid rgba(113,65,20,.3) !important;
+  clip-path:none !important;
+  background:
+    linear-gradient(45deg,transparent 42%,rgba(117,68,24,.34) 43% 49%,transparent 50%) 0 0/8px 8px,
+    linear-gradient(-45deg,transparent 42%,rgba(117,68,24,.28) 43% 49%,transparent 50%) 0 0/8px 8px,
+    #e3a54b !important;
+  box-shadow:inset 2px 2px 0 rgba(255,239,196,.32), inset -3px -3px 0 rgba(102,54,14,.12), 0 4px 10px rgba(55,27,18,.18) !important;
+}
+
+.crepe-cursor-shape{
+  inset:-9px !important;
+  clip-path:none !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:url("assets/crepsSliceFacingUp.png") center / contain no-repeat !important;
+  box-shadow:none !important;
+  filter:drop-shadow(0 5px 5px rgba(50,24,15,.2));
+  opacity:0;
+  transform:scale(.62) rotate(-14deg);
+}
+
+.ice-cursor.hover{
+  width:34px;
+  height:34px;
+}
+
+.ice-cursor.hover .waffle-cursor-shape{
+  opacity:0;
+  transform:scale(.48) rotate(24deg);
+}
+
+.ice-cursor.hover .crepe-cursor-shape{
+  opacity:1;
+  transform:scale(1) rotate(0deg);
+}
+
+/* ----- clearer, more tactile interaction ----- */
+.primary-link,
+.menu-trigger,
+.menu-launch,
+.quiet-link,
+.footer-socials a,
+.visit-links a,
+.header-socials a{
+  -webkit-tap-highlight-color:transparent;
+}
+
+.primary-link:active,
+.menu-trigger:active,
+.menu-launch:active{
+  transform:scale(.97) !important;
+  transition-duration:90ms !important;
+}
+
+.photo-frame,
+.reel-device,
+.menu-launch,
+.primary-link,
+.menu-trigger{
+  --mx:50%;
+  --my:50%;
+}
+
+.photo-image-shell{
+  position:relative;
+}
+
+.photo-image-shell::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 30%);
+  transition:opacity 240ms ease;
+}
+
+.photo-frame:hover .photo-image-shell::after{
+  opacity:1;
+}
+
+.lightbox-backdrop{
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+
+@media(max-width:720px){
+  .story-gallery .photo-frame,
+  .story-gallery .frame-a,
+  .story-gallery .frame-b,
+  .story-gallery .frame-c,
+  .story-gallery .frame-d{
+    flex:0 0 min(82vw,340px);
+  }
+
+  .photo-image-shell,
+  .frame-a .photo-image-shell,
+  .frame-b .photo-image-shell,
+  .frame-c .photo-image-shell,
+  .frame-d .photo-image-shell{
+    height:auto !important;
+    max-height:none !important;
+  }
+
+  .food-pancake-real{
+    width:142px;
+    left:0;
+  }
+
+  .reel-device:hover{
+    transform:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .photo-image-shell,
+  .reel-device,
+  .photo-frame figcaption{
+    transition:none !important;
+  }
+}
