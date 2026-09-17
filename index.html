@@ -11,7 +11,9 @@
   <title>Zoom Gelato — Annaba</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="refinement.css" />
   <script defer src="script.js"></script>
+  <script defer src="refinement.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -108,9 +110,9 @@
           <img class="hero-photo" src="assets/ShotOfIcecream.png" alt="A close-up serving of Zoom Gelato ice cream" />
           <span class="hero-photo-tag">ZOOM GELATO · ANNABA</span>
         </div>
-        <img class="food food-cone" src="assets/gelato-cone.svg" alt="" aria-hidden="true" data-parallax="-0.12" />
+        <img class="food food-pancake-real" src="assets/pancake%20nobg.png" alt="" aria-hidden="true" data-parallax="-0.12" />
         <span class="scribble scribble-a" data-parallax="0.07">fresh daily</span>
-        <span class="scribble scribble-b" data-parallax="-0.08">made to disappear fast</span>
+        <span class="scribble scribble-b" data-parallax="-0.08">crafted in Annaba</span>
       </div>
 
       <div class="hero-bottom" data-reveal="fade">
@@ -122,7 +124,7 @@
     <section class="menu-callout" id="menu">
       <div class="menu-callout-copy">
         <p class="kicker" data-reveal="fade">THE MENU</p>
-        <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>weakness.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>favorite.</i></span></h2>
         <p data-reveal="fade">Open the full menu when you need it. Search by name, filter by category, and check prices without leaving the page.</p>
       </div>
 
@@ -157,62 +159,66 @@
           <div class="photo-image-shell shell-warm">
             <img src="assets/WaffleBitesWithDrinkBehindIt.png" alt="Waffle bites with a drink behind them at Zoom Gelato" />
           </div>
-          <figcaption><span>WAFFLE BITES</span><strong>Crunch first. Drink second.</strong></figcaption>
+          <figcaption><span>WAFFLE BITES</span><strong>Waffle bites with a cold drink.</strong></figcaption>
         </figure>
 
         <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" tabindex="0" role="button" aria-label="View strawberry cake photo larger">
           <div class="photo-image-shell shell-pink">
             <img src="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" alt="A strawberry cake slice with another dessert in the background" />
           </div>
-          <figcaption><span>CAKE</span><strong>Soft, rich, and absolutely not subtle.</strong></figcaption>
+          <figcaption><span>CAKE</span><strong>Strawberry cake, served fresh.</strong></figcaption>
         </figure>
 
         <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="assets/ViewOfIcecreamMixThingOutside.png" tabindex="0" role="button" aria-label="View outside dessert photo larger">
           <div class="photo-image-shell shell-cool">
             <img src="assets/ViewOfIcecreamMixThingOutside.png" alt="A mixed ice cream dessert photographed outside Zoom Gelato" />
           </div>
-          <figcaption><span>OUTSIDE ZOOM</span><strong>Dessert with a bit of Annaba around it.</strong></figcaption>
+          <figcaption><span>OUTSIDE ZOOM</span><strong>A dessert break outside Zoom.</strong></figcaption>
         </figure>
 
         <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="assets/chockolatePistachSlide.png" tabindex="0" role="button" aria-label="View chocolate pistachio dessert photo larger">
           <div class="photo-image-shell shell-pistachio">
             <img src="assets/chockolatePistachSlide.png" alt="A chocolate and pistachio dessert slice" />
           </div>
-          <figcaption><span>CHOCOLATE × PISTACHIO</span><strong>The combo that keeps showing up for a reason.</strong></figcaption>
+          <figcaption><span>CHOCOLATE × PISTACHIO</span><strong>Chocolate and pistachio, together.</strong></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="reel-section" aria-label="Zoom Gelato Instagram Reel">
+    <section class="reel-section" aria-label="Zoom Gelato Reel preview">
       <div class="reel-copy">
         <p class="kicker" data-reveal="fade">A QUICK LOOK</p>
         <h2 data-reveal="lines"><span><i>See Zoom</i></span><span><i>in motion.</i></span></h2>
-        <p data-reveal="fade">A live Reel from Zoom Gelato, embedded directly from Instagram.</p>
-        <a class="reel-link" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="fade">Open on Instagram ↗</a>
+        <p data-reveal="fade">A short preview from @zoomgelato23. It plays silently and loops in place.</p>
+        <a class="reel-link" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="fade">Open the original Reel ↗</a>
       </div>
 
-      <div class="reel-device" data-reveal="scale">
+      <a class="reel-device" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="scale" aria-label="Open the original Zoom Gelato Reel on Instagram">
         <div class="reel-topline">
           <span class="reel-dot"></span>
           <span>@zoomgelato23</span>
           <span>Reel</span>
         </div>
         <div class="reel-embed-wrap">
-          <iframe
-            title="Zoom Gelato Instagram Reel"
-            src="https://www.instagram.com/reel/C-nqzotO2Zs/embed/?autoplay=1&muted=1&loop=1"
-            loading="lazy"
-            allow="autoplay; encrypted-media; picture-in-picture"
+          <video
+            class="reel-video"
+            src="assets/Video.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            disablepictureinpicture
             tabindex="-1"
             aria-hidden="true">
-          </iframe>
+          </video>
           <div class="reel-muted-badge" aria-hidden="true">
             <span>Muted</span>
             <span>↻</span>
           </div>
         </div>
-        <div class="reel-note"><span>LIVE FROM INSTAGRAM</span><span>↗</span></div>
-      </div>
+        <div class="reel-note"><span>MUTED · LOOPING</span><span>OPEN REEL ↗</span></div>
+      </a>
     </section>
 
     <section class="visit" id="visit">
