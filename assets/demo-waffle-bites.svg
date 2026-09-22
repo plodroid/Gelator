@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125">
+<rect width="900" height="1125" rx="52" fill="#fff0dd"/>
+<circle cx="720" cy="170" r="110" fill="#f7c84e"/>
+<g transform="translate(130 240)">
+  <g fill="#df9c4d" stroke="#af6a28" stroke-width="10">
+    <rect x="0" y="50" width="260" height="260" rx="38" transform="rotate(-10 130 180)"/>
+    <rect x="300" y="10" width="260" height="260" rx="38" transform="rotate(8 430 140)"/>
+    <rect x="170" y="330" width="260" height="260" rx="38" transform="rotate(4 300 460)"/>
+  </g>
+  <g stroke="#b87331" stroke-width="12" opacity=".55">
+    <path d="M40 110l180 180M90 70l170 170M220 80L40 260M265 120L90 300"/>
+    <path d="M345 65l170 170M390 45l170 170M520 70L345 245M555 115L390 270"/>
+    <path d="M215 380l175 175M260 355l175 175M400 380L225 555M445 420L270 590"/>
+  </g>
+</g>
+<text x="70" y="1030" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#9d542d" letter-spacing="4">WAFFLE BITES</text>
+</svg>
