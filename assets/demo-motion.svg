@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1400">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17110f"/><stop offset=".55" stop-color="#6d2e28"/><stop offset="1" stop-color="#edb64b"/></linearGradient></defs>
+<rect width="900" height="1400" rx="64" fill="url(#g)"/>
+<circle cx="620" cy="360" r="250" fill="#fec30d" opacity=".9"/>
+<circle cx="325" cy="700" r="210" fill="#f2c6c1"/>
+<path d="M180 1010h540" stroke="#fff8f1" stroke-width="14" stroke-linecap="round" opacity=".85"/>
+<path d="M180 1060h380" stroke="#fff8f1" stroke-width="14" stroke-linecap="round" opacity=".45"/>
+<text x="90" y="190" font-family="Arial,sans-serif" font-size="48" font-weight="800" fill="#fff">MELLO</text>
+<text x="90" y="1260" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff" letter-spacing="4">DEMO REEL FRAME</text>
+</svg>
