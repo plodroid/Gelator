@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125">
+<rect width="900" height="1125" rx="52" fill="#f9dfdf"/>
+<g transform="translate(175 180)">
+  <path d="M90 190h470L450 760H190z" fill="#f3cab7" stroke="#b86855" stroke-width="12"/>
+  <path d="M120 265h405M135 375h365M155 485h320M170 595h275" stroke="#fff7ef" stroke-width="48"/>
+  <path d="M90 190c150-150 335-150 470 0" fill="#fff4eb"/>
+  <circle cx="210" cy="130" r="48" fill="#e55057"/>
+  <circle cx="320" cy="105" r="54" fill="#d93e50"/>
+  <circle cx="430" cy="145" r="44" fill="#ed6570"/>
+  <path d="M212 83l18-34M319 52l8-34M433 101l24-30" stroke="#6a8741" stroke-width="14" stroke-linecap="round"/>
+</g>
+<text x="70" y="1030" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#a44e54" letter-spacing="4">BERRY CAKE</text>
+</svg>
