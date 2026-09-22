@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125">
+<rect width="900" height="1125" rx="52" fill="#dceff3"/>
+<g transform="translate(180 180)">
+  <path d="M120 410h420l-70 330c-8 39-42 67-82 67H270c-40 0-74-28-82-67z" fill="#f6efe6" stroke="#8ea9ad" stroke-width="10"/>
+  <circle cx="230" cy="340" r="128" fill="#f4c8ce"/>
+  <circle cx="385" cy="315" r="140" fill="#d8e7af"/>
+  <circle cx="320" cy="215" r="122" fill="#f6d185"/>
+  <path d="M170 500h320M155 595h350M140 690h375" stroke="#c9c0b5" stroke-width="12" opacity=".75"/>
+</g>
+<text x="70" y="1030" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#4a7880" letter-spacing="4">GELATO MIX</text>
+</svg>
