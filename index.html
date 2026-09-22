@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#fff8f6" />
-  <meta name="description" content="Zoom Gelato in Annaba — gelato, crêpes, waffles, pancakes, cakes and more." />
-  <meta property="og:title" content="Zoom Gelato — Annaba" />
-  <meta property="og:description" content="Dessert worth the detour." />
+  <meta name="theme-color" content="#fbf6ea" />
+  <meta name="description" content="Mélina Happiness in a Cup — coffee, matcha, pastries, ice cream and sweet moments in Annaba." />
+  <meta property="og:title" content="Mélina — Happiness in a Cup" />
+  <meta property="og:description" content="Coffee, desserts and a little happiness in Annaba." />
   <meta property="og:type" content="website" />
-  <title>Zoom Gelato — Annaba</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <title>Mélina — Happiness in a Cup</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="refinement.css" />
   <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="brand.css" />
   <script defer src="script.js"></script>
-  <script defer src="refinement.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -22,32 +21,24 @@
   <div class="cursor-layer" aria-hidden="true">
     <div class="ice-cursor" id="iceCursor">
       <span class="cursor-shape">
-        <span class="waffle-cursor-shape" aria-hidden="true"></span>
-        <span class="crepe-cursor-shape" aria-hidden="true"></span>
+        <span class="waffle-cursor-shape"></span>
+        <span class="crepe-cursor-shape"></span>
       </span>
     </div>
-    <div class="cursor-particles" id="cursorParticles"></div>
   </div>
 
   <header class="site-header" data-header>
-    <div class="header-socials" aria-label="Zoom Gelato social links">
-      <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram</a>
-      <span aria-hidden="true">/</span>
-      <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook</a>
-    </div>
+    <div class="header-context">Annaba · Coffee &amp; desserts</div>
 
-    <a class="wordmark" href="#top" aria-label="Zoom Gelato home">
-      <span class="brand-icon-shell"><img src="assets/IconWithSlightBgIssueSoMakeTheBGWhite.png" alt="" /></span>
-      <span class="brand-type"><b>ZOOM</b><small>gelato</small></span>
+    <a class="wordmark" href="#top" aria-label="Mélina home">
+      <span class="brand-type"><b>MÉLINA</b><small>Happiness in a Cup</small></span>
     </a>
 
     <button class="menu-trigger" type="button" data-menu-open aria-haspopup="dialog" aria-controls="menuDrop">
-      <span>Menu</span>
+      <span>Menu highlights</span>
       <svg class="menu-icon" viewBox="0 0 28 28" aria-hidden="true">
         <path d="M9.4 11.2c.8-3.6 3.1-5.6 6.8-5.6 3.6 0 5.8 1.9 6.5 5.5" />
         <path d="M8.1 12.2h15.2l-5.7 11.2c-.6 1.1-2.1 1.1-2.7 0L8.1 12.2Z" />
-        <circle cx="13.4" cy="8.4" r="3.1" />
-        <circle cx="18.2" cy="8.1" r="2.8" />
       </svg>
     </button>
   </header>
@@ -57,7 +48,7 @@
   <section class="menu-drop" id="menuDrop" role="dialog" aria-modal="true" aria-labelledby="menuDropTitle" aria-hidden="true" data-menu-drop>
     <div class="menu-drop-head">
       <div>
-        <h2 id="menuDropTitle">The menu.</h2>
+        <h2 id="menuDropTitle">A taste of Mélina.</h2>
       </div>
       <button class="menu-close" type="button" data-menu-close aria-label="Close menu">
         <span></span><span></span>
@@ -67,16 +58,16 @@
     <div class="menu-toolbar">
       <label class="menu-select-wrap">
         <span>Category</span>
-        <select data-menu-category aria-label="Filter menu by category"></select>
+        <select data-menu-category aria-label="Filter menu highlights by category"></select>
       </label>
       <label class="menu-search-wrap">
         <span>Search</span>
-        <input type="search" placeholder="Try “pistache” or “crêpe”" data-menu-search autocomplete="off" />
+        <input type="search" placeholder="Try “matcha” or “roll”" data-menu-search autocomplete="off" />
       </label>
     </div>
 
     <div class="menu-results-meta">
-      <span><b data-menu-count>0</b> items</span>
+      <span><b data-menu-count>0</b> highlights</span>
     </div>
 
     <div class="menu-list" data-menu-list aria-live="polite"></div>
@@ -84,129 +75,112 @@
 
   <main id="main">
     <section class="hero" id="top">
-      <div class="hero-orbit" data-parallax="0.12" aria-hidden="true"></div>
+      <div class="hero-orbit" data-parallax="0.1" aria-hidden="true"></div>
 
       <div class="hero-copy">
         <h1 class="hero-title" data-reveal="lines">
-          <span><i>Dessert worth</i></span>
-          <span><i>the detour.</i></span>
+          <span><i>Happiness,</i></span>
+          <span><i>served warm.</i></span>
         </h1>
-        <p class="hero-lead" data-reveal="fade">Gelato, crêpes, waffles, pancakes, cakes and more.</p>
+        <p class="hero-lead" data-reveal="fade">Coffee, matcha, pastries, ice cream and a signature cookie cup — made for slow moments in Annaba.</p>
         <div class="hero-actions" data-reveal="fade">
           <button class="primary-link" type="button" data-menu-open>
-            <span>See the menu</span>
+            <span>See the highlights</span>
             <span class="arrow" aria-hidden="true">↗</span>
           </button>
-          <a class="quiet-link" href="#visit">Find us <span aria-hidden="true">↓</span></a>
+          <a class="quiet-link" href="#visit">Find Mélina <span aria-hidden="true">↓</span></a>
         </div>
       </div>
 
-      <div class="hero-food" aria-label="Zoom Gelato ice cream">
-        <div class="hero-photo-shell" data-parallax="0.18">
-          <img class="hero-photo" src="assets/ShotOfIcecream.png" alt="A close-up serving of Zoom Gelato ice cream" />
+      <div class="hero-food" aria-label="Illustration of Mélina's signature cookie cup">
+        <div class="brand-hero-plate" data-parallax="0.16">
+          <div class="cookie-cup-art" aria-hidden="true"></div>
+          <p class="hero-art-label">Cookie cup · coffee · ice cream</p>
         </div>
-        <img class="food food-pancake-real" src="assets/pancake%20nobg.png" alt="" aria-hidden="true" data-parallax="-0.12" />
       </div>
     </section>
 
     <section class="menu-callout" id="menu">
       <div class="menu-callout-copy">
-        <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>favorite.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Pick your</i></span><span><i>mood.</i></span></h2>
       </div>
 
       <button class="menu-launch" type="button" data-menu-open data-reveal="scale">
         <span class="menu-launch-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48">
-            <path d="M13 20.5h22L27.3 39a3.6 3.6 0 0 1-6.6 0L13 20.5Z"/>
-            <circle cx="18.5" cy="17" r="8"/>
-            <circle cx="28.6" cy="15.8" r="9"/>
-          </svg>
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/></svg>
         </span>
-        <span><strong>Zoom’s menu</strong></span>
+        <span><strong>Mélina highlights</strong></span>
         <span class="menu-launch-arrow" aria-hidden="true">↗</span>
       </button>
-
-      <div class="menu-float-art" aria-hidden="true">
-        <img src="assets/waffle.svg" alt="" data-parallax="0.18" />
-      </div>
     </section>
 
-    <section class="story" aria-label="Zoom Gelato experience">
+    <section class="story" aria-label="Mélina menu highlights">
       <div class="story-head">
-        <h2 data-reveal="lines"><span><i>Made at Zoom.</i></span><span><i>Served for real.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Made for</i></span><span><i>slow moments.</i></span></h2>
       </div>
 
       <div class="story-gallery">
-        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe" data-lightbox="assets/WaffleBitesWithDrinkBehindIt.png" tabindex="0" role="button" aria-label="View waffle bites photo larger">
-          <div class="photo-image-shell shell-warm">
-            <img src="assets/WaffleBitesWithDrinkBehindIt.png" alt="Waffle bites with a drink behind them at Zoom Gelato" />
+        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe">
+          <div class="photo-image-shell product-tile matcha">
+            <div class="product-art matcha-cup" aria-hidden="true"></div>
           </div>
-          <figcaption><span>Waffle bites</span></figcaption>
+          <figcaption><span>ICED MATCHA</span><strong>Cool, green, easy.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" tabindex="0" role="button" aria-label="View strawberry cake photo larger">
-          <div class="photo-image-shell shell-pink">
-            <img src="assets/StrawberryCakeSliceWithASpeciulouseSliceINtheBackGround.png" alt="A strawberry cake slice with another dessert in the background" />
+        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe">
+          <div class="photo-image-shell product-tile roll">
+            <div class="product-art new-york-roll" aria-hidden="true"></div>
           </div>
-          <figcaption><span>Strawberry cake</span></figcaption>
+          <figcaption><span>NEW YORK ROLL</span><strong>Flaky with a sweet finish.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="assets/ViewOfIcecreamMixThingOutside.png" tabindex="0" role="button" aria-label="View outside dessert photo larger">
-          <div class="photo-image-shell shell-cool">
-            <img src="assets/ViewOfIcecreamMixThingOutside.png" alt="A mixed ice cream dessert photographed outside Zoom Gelato" />
+        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe">
+          <div class="photo-image-shell product-tile chocolate">
+            <div class="product-art hot-chocolate" aria-hidden="true"></div>
           </div>
-          <figcaption><span>Gelato mix</span></figcaption>
+          <figcaption><span>HOT CHOCOLATE</span><strong>Warm, rich, uncomplicated.</strong></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="assets/chockolatePistachSlide.png" tabindex="0" role="button" aria-label="View chocolate pistachio dessert photo larger">
-          <div class="photo-image-shell shell-pistachio">
-            <img src="assets/chockolatePistachSlide.png" alt="A chocolate and pistachio dessert slice" />
+        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe">
+          <div class="photo-image-shell product-tile icecream">
+            <div class="product-art icecream-scoop" aria-hidden="true"></div>
           </div>
-          <figcaption><span>Chocolate &amp; pistachio</span></figcaption>
+          <figcaption><span>ICE CREAM</span><strong>The cold side of happiness.</strong></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="reel-section" aria-label="Zoom Gelato Reel preview">
+    <section class="reel-section signature-section" aria-label="Mélina signature">
       <div class="reel-copy">
-        <h2 data-reveal="lines"><span><i>See Zoom</i></span><span><i>in motion.</i></span></h2>
-        <a class="reel-link" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="fade">Instagram ↗</a>
+        <h2 data-reveal="lines"><span><i>The cup is</i></span><span><i>part of dessert.</i></span></h2>
+        <p data-reveal="fade">Mélina's standout idea turns coffee into the dessert itself: an edible cookie cup, finished with ice cream on top.</p>
       </div>
 
-      <a class="reel-device" href="https://www.instagram.com/zoomgelato23/reel/C-nqzotO2Zs/" target="_blank" rel="noreferrer" data-reveal="scale" aria-label="Open the original Zoom Gelato Reel on Instagram">
-        <div class="reel-embed-wrap">
-          <video
-            class="reel-video"
-            src="assets/Video.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            disablepictureinpicture
-            tabindex="-1"
-            aria-hidden="true">
-          </video>
+      <div class="reel-device signature-device" data-reveal="scale">
+        <div class="signature-quote">
+          <span class="eyebrow">Signature</span>
+          <strong>Drink it.<br>Eat the cup.</strong>
+          <p>A playful little ritual that gives the brand something instantly memorable.</p>
         </div>
-      </a>
+      </div>
     </section>
 
     <section class="visit" id="visit">
       <div class="visit-copy">
-        <h2 data-reveal="lines"><span><i>Find</i></span><span><i>Zoom.</i></span></h2>
+        <p class="kicker">Annaba</p>
+        <h2 data-reveal="lines"><span><i>Find</i></span><span><i>Mélina.</i></span></h2>
+        <p>WQ66+8G6, Boulevard Ernesto Che Guevara, Annaba, Algeria.</p>
 
         <div class="visit-links" data-reveal="fade">
-          <a href="https://www.google.com/maps/place/Zoom+Gelato/@36.9247015,7.7593177,17z/data=!3m1!4b1!4m6!3m5!1s0x12f0070d6bb39929:0x1eb85e9e94b9987b!8m2!3d36.9246972!4d7.7618926!16s%2Fg%2F11g8dl3wx6?coh=164777&entry=tt&shorturl=1" target="_blank" rel="noreferrer">Google Maps ↗</a>
-          <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer">Instagram ↗</a>
-          <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer">Facebook ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A9lina%20Happiness%20in%20a%20Cup%20Annaba" target="_blank" rel="noreferrer">Google Maps ↗</a>
         </div>
       </div>
 
       <div class="map-wrap" data-reveal="map">
         <div class="map-curtain" aria-hidden="true"></div>
         <iframe
-          title="Zoom Gelato on Google Maps"
-          src="https://www.google.com/maps?q=36.9246972,7.7618926&z=17&output=embed"
+          title="Mélina Happiness in a Cup on Google Maps"
+          src="https://www.google.com/maps?q=WQ66%2B8G6%2C%20Bd%20Ernesto%20Che%20Guevara%2C%20Annaba%2C%20Algeria&amp;output=embed"
           loading="lazy"
           allowfullscreen
           referrerpolicy="no-referrer-when-downgrade">
@@ -215,30 +189,18 @@
     </section>
   </main>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Zoom Gelato photo viewer">
-    <button class="lightbox-backdrop" type="button" data-lightbox-close aria-label="Close image viewer"></button>
-    <div class="lightbox-panel">
-      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">
-        <span></span><span></span>
-      </button>
-      <img src="" alt="" data-lightbox-image />
-      <div class="lightbox-caption" data-lightbox-caption></div>
-    </div>
-  </div>
-
   <footer class="site-footer">
     <div class="footer-top">
-      <div class="footer-brand"><span>ZOOM</span></div>
+      <div class="footer-brand"><span>Mélina</span></div>
 
       <div class="footer-socials">
-        <a href="https://www.instagram.com/zoomgelato23/" target="_blank" rel="noreferrer"><span>Instagram</span><b>↗</b></a>
-        <a href="https://www.facebook.com/zoomgelato/" target="_blank" rel="noreferrer"><span>Facebook</span><b>↗</b></a>
-        <a href="https://www.google.com/maps/place/Zoom+Gelato/@36.9247015,7.7593177,17z" target="_blank" rel="noreferrer"><span>Google Maps</span><b>↗</b></a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A9lina%20Happiness%20in%20a%20Cup%20Annaba" target="_blank" rel="noreferrer"><span>Google Maps</span><b>↗</b></a>
+        <a href="#menu" data-menu-open><span>Menu highlights</span><b>↗</b></a>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <button type="button" data-menu-open>Menu</button>
+      <span class="footer-note">Happiness in a Cup · Annaba</span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
