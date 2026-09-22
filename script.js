@@ -185,39 +185,7 @@ if(finePointer && !reducedMotion){
   });
 }
 
-const cursor=$("#iceCursor");
-const cursorShape=cursor ? $(".cursor-shape",cursor) : null;
-if(finePointer && !reducedMotion && cursor && cursorShape){
-  document.documentElement.classList.add("custom-cursor");
-  let lastX=-100,lastY=-100,lastT=performance.now();
-  let speedTarget=0,speedCurrent=0,cursorRAF=0;
-
-  function cursorFrame(){
-    cursorRAF=0;
-    speedCurrent+=(speedTarget-speedCurrent)*.25;
-    speedTarget*=.8;
-    cursorShape.style.setProperty("--sx",(1+speedCurrent*.18).toFixed(3));
-    cursorShape.style.setProperty("--sy",(1-speedCurrent*.08).toFixed(3));
-    if(Math.abs(speedTarget-speedCurrent)>.003) cursorRAF=requestAnimationFrame(cursorFrame);
-  }
-
-  addEventListener("pointermove",event=>{
-    const now=performance.now();
-    const dt=Math.max(6,now-lastT);
-    const velocity=Math.hypot(event.clientX-lastX,event.clientY-lastY)/dt;
-    speedTarget=Math.max(speedTarget,Math.min(1,velocity/2.2));
-    cursor.style.transform=`translate3d(${event.clientX}px,${event.clientY}px,0) translate(-50%,-50%)`;
-    cursor.classList.add("ready");
-    lastX=event.clientX;lastY=event.clientY;lastT=now;
-    if(!cursorRAF) cursorRAF=requestAnimationFrame(cursorFrame);
-  },{passive:true});
-
-  document.addEventListener("mouseover",event=>{
-    cursor.classList.toggle("hover",!!event.target.closest("a,button,input,select,[data-tilt],[data-lightbox]"));
-  });
-  document.addEventListener("mouseleave",()=>cursor.classList.remove("ready"));
-  document.addEventListener("mouseenter",()=>cursor.classList.add("ready"));
-}
+/* Cursor behavior lives in cursor.js so it has one owner only. */
 
 const lightbox=$("#lightbox");
 const lightboxImage=$("[data-lightbox-image]");
