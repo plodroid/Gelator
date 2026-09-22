@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1125">
+<rect width="900" height="1125" rx="52" fill="#eef2d7"/>
+<g transform="translate(150 225)">
+  <path d="M80 470L350 80l300 390z" fill="#76503f" stroke="#4f3128" stroke-width="12"/>
+  <path d="M130 430L350 135l235 295z" fill="#d7e49a"/>
+  <path d="M165 390L350 185l195 205z" fill="#f2e8cf"/>
+  <path d="M205 350L350 235l155 115z" fill="#704232"/>
+  <g fill="#6e8d43">
+    <circle cx="270" cy="210" r="20"/><circle cx="330" cy="170" r="22"/><circle cx="390" cy="185" r="18"/><circle cx="445" cy="225" r="21"/>
+  </g>
+</g>
+<text x="70" y="1030" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#64743d" letter-spacing="4">PISTACHIO SLICE</text>
+</svg>
