@@ -1,0 +1,221 @@
+/* Final layout + cursor ownership layer. Loaded last on purpose. */
+
+/* ---------- equal media cards ---------- */
+.story-gallery{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:16px !important;
+  align-items:start !important;
+}
+
+.story-gallery .photo-frame,
+.story-gallery .frame-a,
+.story-gallery .frame-b,
+.story-gallery .frame-c,
+.story-gallery .frame-d{
+  display:block !important;
+  grid-column:auto !important;
+  grid-row:auto !important;
+  min-width:0 !important;
+}
+
+.photo-image-shell,
+.frame-a .photo-image-shell,
+.frame-b .photo-image-shell,
+.frame-c .photo-image-shell,
+.frame-d .photo-image-shell{
+  position:relative !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:4 / 5 !important;
+  display:block !important;
+  overflow:hidden !important;
+  padding:0 !important;
+  border-radius:20px !important;
+}
+
+.photo-image-shell::before{
+  display:none !important;
+}
+
+.photo-image-shell img,
+.frame-a .photo-image-shell img,
+.frame-b .photo-image-shell img,
+.frame-c .photo-image-shell img,
+.frame-d .photo-image-shell img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  border-radius:inherit !important;
+  transform:scale(1.001) !important;
+}
+
+.photo-frame:hover .photo-image-shell img{
+  transform:scale(1.035) !important;
+}
+
+/* Hero media also fills its frame instead of letterboxing. */
+.hero-photo{
+  width:100% !important;
+  height:100% !important;
+  padding:0 !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+
+/* Reel stays a clean, fixed media surface. */
+.reel-embed-wrap{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:9 / 16 !important;
+  overflow:hidden !important;
+}
+.reel-cover-image{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+
+/* ---------- one cursor system ---------- */
+@media (hover:hover) and (pointer:fine){
+  html.custom-cursor,
+  html.custom-cursor body,
+  html.custom-cursor body *{
+    cursor:none !important;
+  }
+
+  .cursor-layer{
+    display:block !important;
+    position:fixed !important;
+    inset:0 !important;
+    z-index:10000 !important;
+    pointer-events:none !important;
+  }
+
+  .ice-cursor{
+    position:fixed !important;
+    left:0 !important;
+    top:0 !important;
+    width:44px !important;
+    height:44px !important;
+    opacity:0 !important;
+    overflow:visible !important;
+    contain:none !important;
+    pointer-events:none !important;
+    transform:translate3d(-100px,-100px,0) translate(-50%,-50%) !important;
+    transition:opacity 80ms ease !important;
+    will-change:transform,opacity !important;
+  }
+
+  .ice-cursor.ready{
+    opacity:1 !important;
+  }
+
+  .cursor-shape{
+    position:absolute !important;
+    inset:-14px !important;
+    display:block !important;
+    overflow:visible !important;
+    contain:none !important;
+    transform:
+      rotate(var(--motion-angle,0deg))
+      scale(var(--motion-sx,1),var(--motion-sy,1)) !important;
+    transform-origin:50% 50% !important;
+    will-change:transform !important;
+  }
+
+  .waffle-cursor-shape,
+  .crepe-cursor-shape{
+    position:absolute !important;
+    display:block !important;
+    pointer-events:none !important;
+    will-change:transform,opacity !important;
+  }
+
+  /* Default cursor: the original transparent pancake PNG. */
+  .waffle-cursor-shape{
+    inset:5px !important;
+    border:0 !important;
+    border-radius:50% !important;
+    clip-path:none !important;
+    background:url("assets/pancake%20nobg.png") center / contain no-repeat !important;
+    box-shadow:none !important;
+    filter:drop-shadow(0 4px 4px rgba(50,24,15,.18)) !important;
+    opacity:1 !important;
+    transform:rotate(var(--pancake-spin,0deg)) scale(1) !important;
+    transform-origin:50% 50% !important;
+    transition:opacity 120ms ease !important;
+  }
+
+  /* Pointer cursor: original crepe PNG, locked to its old -32deg angle. */
+  .crepe-cursor-shape{
+    inset:2px !important;
+    border:0 !important;
+    border-radius:0 !important;
+    clip-path:polygon(50% 0%,100% 100%,0% 100%) !important;
+    background:url("assets/crepsSliceFacingUp.png") center / 100% 100% no-repeat !important;
+    box-shadow:none !important;
+    filter:drop-shadow(0 5px 5px rgba(50,24,15,.2)) !important;
+    opacity:0 !important;
+    transform:scale(.58) rotate(-32deg) !important;
+    transform-origin:50% 58% !important;
+    transition:
+      opacity 120ms ease,
+      transform 220ms cubic-bezier(.22,1,.36,1) !important;
+  }
+
+  .ice-cursor.hover .waffle-cursor-shape{
+    opacity:0 !important;
+  }
+
+  .ice-cursor.hover .crepe-cursor-shape{
+    opacity:1 !important;
+    transform:scale(.96) rotate(-32deg) !important;
+  }
+}
+
+@media(max-width:980px){
+  .story-gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media(max-width:720px){
+  .story-gallery{
+    display:flex !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    scroll-snap-type:x mandatory !important;
+    padding:0 18px 10px !important;
+    margin-inline:-18px !important;
+  }
+
+  .story-gallery .photo-frame,
+  .story-gallery .frame-a,
+  .story-gallery .frame-b,
+  .story-gallery .frame-c,
+  .story-gallery .frame-d{
+    flex:0 0 min(82vw,340px) !important;
+    scroll-snap-align:center !important;
+  }
+
+  .photo-image-shell,
+  .frame-a .photo-image-shell,
+  .frame-b .photo-image-shell,
+  .frame-c .photo-image-shell,
+  .frame-d .photo-image-shell{
+    aspect-ratio:4 / 5 !important;
+  }
+}
