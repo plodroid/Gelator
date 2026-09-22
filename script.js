@@ -1,17 +1,32 @@
 const menuItems = [
-  { name: "Cookie Cup Coffee", category: "Signature", note: "Coffee served in an edible cookie cup and finished with ice cream." },
-  { name: "Iced Matcha Latte", category: "Drinks", note: "A chilled matcha favorite." },
-  { name: "Hot Chocolate", category: "Drinks", note: "A warm chocolate drink for slower café moments." },
-  { name: "Hot Drinks", category: "Drinks", note: "Coffee and other warm drinks." },
-  { name: "Cold Drinks", category: "Drinks", note: "Cold café drinks and refreshers." },
-  { name: "New York Roll", category: "Pastries", note: "A laminated round pastry with a rich filling." },
-  { name: "Pastries & Viennoiserie", category: "Pastries", note: "Sweet baked treats from the counter." },
-  { name: "Ice Cream", category: "Desserts", note: "Scoops and ice-cream desserts." }
+  { name:"Classic Waffle", category:"Waffles", price:350, note:"Chocolate, fruit or caramel" },
+  { name:"Pistachio Waffle", category:"Waffles", price:550, note:"Pistachio cream and roasted nuts" },
+  { name:"Berry Waffle", category:"Waffles", price:500, note:"Berries, cream and sauce" },
+  { name:"Mini Waffle Bites", category:"Waffles", price:300, note:"A small shareable box" },
+
+  { name:"Chocolate Crêpe", category:"Crêpes", price:350 },
+  { name:"Banana Crêpe", category:"Crêpes", price:450 },
+  { name:"Pistachio Crêpe", category:"Crêpes", price:550 },
+  { name:"Fruit Crêpe", category:"Crêpes", price:600 },
+
+  { name:"Vanilla Scoop", category:"Gelato", price:250 },
+  { name:"Strawberry Scoop", category:"Gelato", price:250 },
+  { name:"Pistachio Scoop", category:"Gelato", price:300 },
+  { name:"Mello Mix", category:"Gelato", price:650, note:"Three demo flavors and toppings" },
+
+  { name:"Berry Cake", category:"Cakes", price:450 },
+  { name:"Chocolate Slice", category:"Cakes", price:500 },
+  { name:"Pistachio Slice", category:"Cakes", price:550 },
+  { name:"Mini Cheesecake", category:"Cakes", price:400 },
+
+  { name:"Iced Coffee", category:"Drinks", price:300 },
+  { name:"Milkshake", category:"Drinks", price:400 },
+  { name:"Hot Chocolate", category:"Drinks", price:300 },
+  { name:"Fruit Cooler", category:"Drinks", price:350 }
 ];
 
-const $ = (q, c = document) => c.querySelector(q);
-const $$ = (q, c = document) => [...c.querySelectorAll(q)];
-
+const $ = (q, c=document) => c.querySelector(q);
+const $$ = (q, c=document) => [...c.querySelectorAll(q)];
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = matchMedia("(pointer:fine)").matches;
 
@@ -23,23 +38,20 @@ const menuCategory = $("[data-menu-category]");
 const menuSearch = $("[data-menu-search]");
 const menuList = $("[data-menu-list]");
 const menuCount = $("[data-menu-count]");
-
-let menuState = { category: "All", search: "" };
+let menuState = {category:"All",search:""};
 let lastMenuTrigger = null;
 
-const categories = ["All", ...new Set(menuItems.map(item => item.category))];
+const categories = ["All", ...new Set(menuItems.map(i=>i.category))];
 
 function populateCategories(){
-  menuCategory.innerHTML = categories
-    .map(category => `<option value="${category}">${category}</option>`)
-    .join("");
+  menuCategory.innerHTML = categories.map(category => `<option value="${category}">${category}</option>`).join("");
 }
 
 function filteredMenu(){
-  const q = menuState.search.trim().toLocaleLowerCase();
+  const q = menuState.search.trim().toLowerCase();
   return menuItems.filter(item => {
     const inCategory = menuState.category === "All" || item.category === menuState.category;
-    const haystack = [item.name, item.category, item.note || ""].join(" ").toLocaleLowerCase();
+    const haystack = [item.name,item.category,item.note||""].join(" ").toLowerCase();
     return inCategory && (!q || haystack.includes(q));
   });
 }
@@ -47,26 +59,19 @@ function filteredMenu(){
 function renderMenu(){
   const items = filteredMenu();
   menuCount.textContent = items.length;
-
   if(!items.length){
-    menuList.innerHTML = `
-      <div class="menu-empty">
-        <div>
-          <strong>No match.</strong><br>
-          <span>Try another category or search.</span>
-        </div>
-      </div>`;
+    menuList.innerHTML = '<div class="menu-empty"><div><strong>No match.</strong><br><span>Try another category or search.</span></div></div>';
     return;
   }
 
-  menuList.innerHTML = items.map((item, index) => `
-    <article class="menu-row" style="--i:${Math.min(index, 18)}">
+  menuList.innerHTML = items.map((item,index)=>`
+    <article class="menu-row" style="--i:${Math.min(index,18)}">
       <div class="menu-row-copy">
         <small>${item.category}</small>
         <strong>${item.name}</strong>
         ${item.note ? `<p>${item.note}</p>` : ""}
       </div>
-      <div class="menu-row-price">Available in store</div>
+      <div class="menu-row-price">${item.price} DA</div>
     </article>
   `).join("");
 }
@@ -75,229 +80,177 @@ function openMenu(trigger){
   lastMenuTrigger = trigger || document.activeElement;
   menuDrop.classList.add("open");
   menuBackdrop.classList.add("show");
-  menuDrop.setAttribute("aria-hidden", "false");
+  menuDrop.setAttribute("aria-hidden","false");
   document.body.classList.add("menu-open");
   renderMenu();
-  requestAnimationFrame(() => menuSearch?.focus({preventScroll:true}));
+  requestAnimationFrame(()=>menuSearch?.focus({preventScroll:true}));
 }
 
 function closeMenu(){
   menuDrop.classList.remove("open");
   menuBackdrop.classList.remove("show");
-  menuDrop.setAttribute("aria-hidden", "true");
+  menuDrop.setAttribute("aria-hidden","true");
   document.body.classList.remove("menu-open");
   if(lastMenuTrigger instanceof HTMLElement) lastMenuTrigger.focus({preventScroll:true});
 }
 
 populateCategories();
 renderMenu();
+menuOpeners.forEach(button=>button.addEventListener("click",()=>openMenu(button)));
+menuCloser.addEventListener("click",closeMenu);
+menuBackdrop.addEventListener("click",closeMenu);
+menuCategory.addEventListener("change",e=>{menuState.category=e.target.value;renderMenu();});
+menuSearch.addEventListener("input",e=>{menuState.search=e.target.value;renderMenu();});
 
-menuOpeners.forEach(button => button.addEventListener("click", event => {
-  if(button.matches("a")) event.preventDefault();
-  openMenu(button);
-}));
-menuCloser.addEventListener("click", closeMenu);
-menuBackdrop.addEventListener("click", closeMenu);
-
-menuCategory.addEventListener("change", event => {
-  menuState.category = event.target.value;
-  renderMenu();
+addEventListener("keydown",event=>{
+  if(event.key==="Escape" && menuDrop.classList.contains("open")) closeMenu();
 });
 
-menuSearch.addEventListener("input", event => {
-  menuState.search = event.target.value;
-  renderMenu();
-});
-
-addEventListener("keydown", event => {
-  if(event.key === "Escape" && menuDrop.classList.contains("open")) closeMenu();
-});
-
-menuDrop.addEventListener("keydown", event => {
-  if(event.key !== "Tab") return;
-  const focusable = $$("button, input, select, a[href]", menuDrop).filter(el => !el.disabled);
+menuDrop.addEventListener("keydown",event=>{
+  if(event.key!=="Tab") return;
+  const focusable = $$("button,input,select,a[href]",menuDrop).filter(el=>!el.disabled);
   if(!focusable.length) return;
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-
-  if(event.shiftKey && document.activeElement === first){
-    event.preventDefault();
-    last.focus();
-  }else if(!event.shiftKey && document.activeElement === last){
-    event.preventDefault();
-    first.focus();
-  }
+  const first=focusable[0], last=focusable[focusable.length-1];
+  if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
+  else if(!event.shiftKey && document.activeElement===last){event.preventDefault();first.focus();}
 });
 
 const revealTargets = $$("[data-reveal]");
-
 if(!reducedMotion && "IntersectionObserver" in window){
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle("visible", entry.isIntersecting);
-    });
-  }, {
-    threshold: 0.16,
-    rootMargin: "-4% 0px -7% 0px"
-  });
-
-  revealTargets.forEach(target => revealObserver.observe(target));
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>entry.target.classList.toggle("visible",entry.isIntersecting));
+  },{threshold:.16,rootMargin:"-4% 0px -7% 0px"});
+  revealTargets.forEach(target=>observer.observe(target));
 }else{
-  revealTargets.forEach(target => target.classList.add("visible"));
+  revealTargets.forEach(target=>target.classList.add("visible"));
 }
 
-const header = $("[data-header]");
-let lastScrollY = scrollY;
-let headerRAF = 0;
-
+const header=$("[data-header]");
+let lastScrollY=scrollY;
+let headerRAF=0;
 function updateHeader(){
-  headerRAF = 0;
-  const y = scrollY;
-  header.classList.toggle("scrolled", y > 20);
-
-  if(y > lastScrollY && y > 300){
-    header.classList.add("hidden");
-  }else{
-    header.classList.remove("hidden");
-  }
-
-  lastScrollY = y;
+  headerRAF=0;
+  const y=scrollY;
+  header.classList.toggle("scrolled",y>20);
+  header.classList.toggle("hidden",y>lastScrollY && y>300);
+  lastScrollY=y;
 }
+addEventListener("scroll",()=>{if(!headerRAF) headerRAF=requestAnimationFrame(updateHeader);},{passive:true});
 
-addEventListener("scroll", () => {
-  if(headerRAF) return;
-  headerRAF = requestAnimationFrame(updateHeader);
-}, {passive:true});
-
-const parallaxItems = $$("[data-parallax]");
-const parallaxState = new Map(
-  parallaxItems.map(item => [item, {current:0, target:0}])
-);
-let parallaxMeasureRAF = 0;
-let parallaxMotionRAF = 0;
-
+const parallaxItems=$$("[data-parallax]");
+const parallaxState=new Map(parallaxItems.map(item=>[item,{current:0,target:0}]));
+let measureRAF=0,motionRAF=0;
 function measureParallax(){
-  parallaxMeasureRAF = 0;
+  measureRAF=0;
   if(reducedMotion) return;
-
-  const vh = innerHeight;
-
-  parallaxItems.forEach(item => {
-    const rect = item.getBoundingClientRect();
-    if(rect.bottom < -160 || rect.top > vh + 160) return;
-
-    const speed = Number(item.dataset.parallax || 0);
-    const centerDelta = (rect.top + rect.height * .5) - vh * .5;
-    const state = parallaxState.get(item);
-    state.target = Math.max(-78, Math.min(78, centerDelta * -speed));
+  const vh=innerHeight;
+  parallaxItems.forEach(item=>{
+    const rect=item.getBoundingClientRect();
+    if(rect.bottom < -160 || rect.top > vh+160) return;
+    const speed=Number(item.dataset.parallax||0);
+    const center=(rect.top+rect.height*.5)-vh*.5;
+    parallaxState.get(item).target=Math.max(-78,Math.min(78,center*-speed));
   });
-
-  if(!parallaxMotionRAF) parallaxMotionRAF = requestAnimationFrame(animateParallax);
+  if(!motionRAF) motionRAF=requestAnimationFrame(animateParallax);
 }
-
 function animateParallax(){
-  parallaxMotionRAF = 0;
-  let keepGoing = false;
-
-  parallaxState.forEach((state, item) => {
-    const delta = state.target - state.current;
-    state.current += delta * .13;
-
-    if(Math.abs(delta) > .08) keepGoing = true;
-    item.style.setProperty("--py", state.current.toFixed(2) + "px");
+  motionRAF=0;
+  let again=false;
+  parallaxState.forEach((state,item)=>{
+    const delta=state.target-state.current;
+    state.current+=delta*.13;
+    if(Math.abs(delta)>.08) again=true;
+    item.style.setProperty("--py",state.current.toFixed(2)+"px");
   });
-
-  if(keepGoing) parallaxMotionRAF = requestAnimationFrame(animateParallax);
+  if(again) motionRAF=requestAnimationFrame(animateParallax);
 }
-
-function requestParallaxMeasure(){
-  if(parallaxMeasureRAF) return;
-  parallaxMeasureRAF = requestAnimationFrame(measureParallax);
-}
-
-addEventListener("scroll", requestParallaxMeasure, {passive:true});
-addEventListener("resize", requestParallaxMeasure);
-requestParallaxMeasure();
+function requestParallax(){if(!measureRAF) measureRAF=requestAnimationFrame(measureParallax);}
+addEventListener("scroll",requestParallax,{passive:true});
+addEventListener("resize",requestParallax);
+requestParallax();
 
 if(finePointer && !reducedMotion){
-  $$("[data-tilt]").forEach(frame => {
-    frame.addEventListener("pointermove", event => {
-      const rect = frame.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      frame.style.setProperty("--ry", (x * 4).toFixed(2) + "deg");
-      frame.style.setProperty("--rx", (y * -3.5).toFixed(2) + "deg");
+  $$("[data-tilt]").forEach(frame=>{
+    frame.addEventListener("pointermove",event=>{
+      const rect=frame.getBoundingClientRect();
+      const x=(event.clientX-rect.left)/rect.width-.5;
+      const y=(event.clientY-rect.top)/rect.height-.5;
+      frame.style.setProperty("--ry",(x*5.5).toFixed(2)+"deg");
+      frame.style.setProperty("--rx",(y*-4.5).toFixed(2)+"deg");
     });
-
-    frame.addEventListener("pointerleave", () => {
-      frame.style.setProperty("--ry", "0deg");
-      frame.style.setProperty("--rx", "0deg");
+    frame.addEventListener("pointerleave",()=>{
+      frame.style.setProperty("--ry","0deg");
+      frame.style.setProperty("--rx","0deg");
     });
   });
 }
 
-const cursor = $("#iceCursor");
-const cursorShape = cursor ? $(".cursor-shape", cursor) : null;
-
+const cursor=$("#iceCursor");
+const cursorShape=cursor ? $(".cursor-shape",cursor) : null;
 if(finePointer && !reducedMotion && cursor && cursorShape){
   document.documentElement.classList.add("custom-cursor");
+  let lastX=-100,lastY=-100,lastT=performance.now();
+  let speedTarget=0,speedCurrent=0,cursorRAF=0;
 
-  let lastX = -100;
-  let lastY = -100;
-  let lastT = performance.now();
-  let speedTarget = 0;
-  let speedCurrent = 0;
-  let cursorRAF = 0;
-
-  function cursorShapeFrame(){
-    cursorRAF = 0;
-    speedCurrent += (speedTarget - speedCurrent) * .28;
-    speedTarget *= .78;
-
-    const sx = 1 + speedCurrent * .22;
-    const sy = 1 - speedCurrent * .1;
-
-    cursorShape.style.setProperty("--sx", sx.toFixed(3));
-    cursorShape.style.setProperty("--sy", sy.toFixed(3));
-
-    if(Math.abs(speedTarget - speedCurrent) > .002){
-      cursorRAF = requestAnimationFrame(cursorShapeFrame);
-    }
+  function cursorFrame(){
+    cursorRAF=0;
+    speedCurrent+=(speedTarget-speedCurrent)*.25;
+    speedTarget*=.8;
+    cursorShape.style.setProperty("--sx",(1+speedCurrent*.18).toFixed(3));
+    cursorShape.style.setProperty("--sy",(1-speedCurrent*.08).toFixed(3));
+    if(Math.abs(speedTarget-speedCurrent)>.003) cursorRAF=requestAnimationFrame(cursorFrame);
   }
 
-  const moveCursor = event => {
-    const now = performance.now();
-    const dt = Math.max(6, now - lastT);
-    const dx = event.clientX - lastX;
-    const dy = event.clientY - lastY;
-    const velocity = Math.hypot(dx,dy) / dt;
-
-    speedTarget = Math.max(speedTarget, Math.min(1, velocity / 2.25));
-    cursor.style.transform =
-      `translate3d(${event.clientX}px,${event.clientY}px,0) translate(-50%,-50%)`;
+  addEventListener("pointermove",event=>{
+    const now=performance.now();
+    const dt=Math.max(6,now-lastT);
+    const velocity=Math.hypot(event.clientX-lastX,event.clientY-lastY)/dt;
+    speedTarget=Math.max(speedTarget,Math.min(1,velocity/2.2));
+    cursor.style.transform=`translate3d(${event.clientX}px,${event.clientY}px,0) translate(-50%,-50%)`;
     cursor.classList.add("ready");
+    lastX=event.clientX;lastY=event.clientY;lastT=now;
+    if(!cursorRAF) cursorRAF=requestAnimationFrame(cursorFrame);
+  },{passive:true});
 
-    lastX = event.clientX;
-    lastY = event.clientY;
-    lastT = now;
-
-    if(!cursorRAF) cursorRAF = requestAnimationFrame(cursorShapeFrame);
-  };
-
-  addEventListener("pointermove", moveCursor, {passive:true});
-
-  document.addEventListener("mouseover", event => {
-    const interactive = !!event.target.closest("a,button,input,select,iframe,[data-tilt]");
-    cursor.classList.toggle("hover", interactive);
+  document.addEventListener("mouseover",event=>{
+    cursor.classList.toggle("hover",!!event.target.closest("a,button,input,select,[data-tilt],[data-lightbox]"));
   });
-
-  document.addEventListener("mouseleave", () => cursor.classList.remove("ready"));
-  document.addEventListener("mouseenter", () => cursor.classList.add("ready"));
+  document.addEventListener("mouseleave",()=>cursor.classList.remove("ready"));
+  document.addEventListener("mouseenter",()=>cursor.classList.add("ready"));
 }
 
-const mapWrap = $(".map-wrap");
-const mapIframe = $(".map-wrap iframe");
+const lightbox=$("#lightbox");
+const lightboxImage=$("[data-lightbox-image]");
+const lightboxCaption=$("[data-lightbox-caption]");
+let lightboxReturnFocus=null;
 
-mapIframe?.addEventListener("load", () => {
-  mapWrap?.classList.add("map-loaded");
+function openLightbox(card){
+  lightboxReturnFocus=card;
+  lightboxImage.src=card.dataset.lightbox;
+  lightboxImage.alt=$("img",card)?.alt || "Mello demo artwork";
+  lightboxCaption.textContent=$("figcaption span",card)?.textContent || "";
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  document.body.classList.add("menu-open");
+  requestAnimationFrame(()=>$(".lightbox-close",lightbox)?.focus({preventScroll:true}));
+}
+function closeLightbox(){
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden","true");
+  document.body.classList.remove("menu-open");
+  lightboxImage.removeAttribute("src");
+  lightboxReturnFocus?.focus({preventScroll:true});
+}
+$$("[data-lightbox]").forEach(card=>{
+  card.addEventListener("click",()=>openLightbox(card));
+  card.addEventListener("keydown",event=>{
+    if(event.key==="Enter" || event.key===" "){event.preventDefault();openLightbox(card);}
+  });
 });
+$$("[data-lightbox-close]").forEach(button=>button.addEventListener("click",closeLightbox));
+addEventListener("keydown",event=>{
+  if(event.key==="Escape" && lightbox?.classList.contains("open")) closeLightbox();
+});
+
+const demoMap=$(".demo-map");
+if(demoMap) requestAnimationFrame(()=>demoMap.classList.add("map-loaded"));
