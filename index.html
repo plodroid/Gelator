@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#fbf6ea" />
-  <meta name="description" content="Mélina Happiness in a Cup — coffee, matcha, pastries, ice cream and sweet moments in Annaba." />
-  <meta property="og:title" content="Mélina — Happiness in a Cup" />
-  <meta property="og:description" content="Coffee, desserts and a little happiness in Annaba." />
+  <meta name="theme-color" content="#fff8f6" />
+  <meta name="description" content="Mello Dessert Club — a fictional dessert-shop portfolio concept." />
+  <meta property="og:title" content="Mello Dessert Club — Demo" />
+  <meta property="og:description" content="A fictional portfolio demo for a dessert brand." />
   <meta property="og:type" content="website" />
-  <title>Mélina — Happiness in a Cup</title>
+  <title>Mello Dessert Club — Portfolio Demo</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="refinement.css" />
   <link rel="stylesheet" href="typography.css" />
   <link rel="stylesheet" href="brand.css" />
   <script defer src="script.js"></script>
+  <script defer src="refinement.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -21,24 +22,31 @@
   <div class="cursor-layer" aria-hidden="true">
     <div class="ice-cursor" id="iceCursor">
       <span class="cursor-shape">
-        <span class="waffle-cursor-shape"></span>
-        <span class="crepe-cursor-shape"></span>
+        <span class="waffle-cursor-shape" aria-hidden="true"></span>
+        <span class="crepe-cursor-shape" aria-hidden="true"></span>
       </span>
     </div>
   </div>
 
   <header class="site-header" data-header>
-    <div class="header-context">Annaba · Coffee &amp; desserts</div>
+    <div class="header-socials demo-label" aria-label="Portfolio demo status">
+      <span>Portfolio demo</span>
+      <span aria-hidden="true">/</span>
+      <span>Fictional brand</span>
+    </div>
 
-    <a class="wordmark" href="#top" aria-label="Mélina home">
-      <span class="brand-type"><b>MÉLINA</b><small>Happiness in a Cup</small></span>
+    <a class="wordmark" href="#top" aria-label="Mello Dessert Club home">
+      <span class="brand-icon-shell" aria-hidden="true"><span class="brand-mark">M</span></span>
+      <span class="brand-type"><b>MELLO</b><small>dessert club</small></span>
     </a>
 
     <button class="menu-trigger" type="button" data-menu-open aria-haspopup="dialog" aria-controls="menuDrop">
-      <span>Menu highlights</span>
+      <span>Menu</span>
       <svg class="menu-icon" viewBox="0 0 28 28" aria-hidden="true">
         <path d="M9.4 11.2c.8-3.6 3.1-5.6 6.8-5.6 3.6 0 5.8 1.9 6.5 5.5" />
         <path d="M8.1 12.2h15.2l-5.7 11.2c-.6 1.1-2.1 1.1-2.7 0L8.1 12.2Z" />
+        <circle cx="13.4" cy="8.4" r="3.1" />
+        <circle cx="18.2" cy="8.1" r="2.8" />
       </svg>
     </button>
   </header>
@@ -47,9 +55,7 @@
 
   <section class="menu-drop" id="menuDrop" role="dialog" aria-modal="true" aria-labelledby="menuDropTitle" aria-hidden="true" data-menu-drop>
     <div class="menu-drop-head">
-      <div>
-        <h2 id="menuDropTitle">A taste of Mélina.</h2>
-      </div>
+      <div><h2 id="menuDropTitle">The menu.</h2></div>
       <button class="menu-close" type="button" data-menu-close aria-label="Close menu">
         <span></span><span></span>
       </button>
@@ -58,16 +64,17 @@
     <div class="menu-toolbar">
       <label class="menu-select-wrap">
         <span>Category</span>
-        <select data-menu-category aria-label="Filter menu highlights by category"></select>
+        <select data-menu-category aria-label="Filter sample menu by category"></select>
       </label>
       <label class="menu-search-wrap">
         <span>Search</span>
-        <input type="search" placeholder="Try “matcha” or “roll”" data-menu-search autocomplete="off" />
+        <input type="search" placeholder="Try “pistachio” or “waffle”" data-menu-search autocomplete="off" />
       </label>
     </div>
 
     <div class="menu-results-meta">
-      <span><b data-menu-count>0</b> highlights</span>
+      <span><b data-menu-count>0</b> sample items</span>
+      <span>Demo menu · fictional prices</span>
     </div>
 
     <div class="menu-list" data-menu-list aria-live="polite"></div>
@@ -75,132 +82,147 @@
 
   <main id="main">
     <section class="hero" id="top">
-      <div class="hero-orbit" data-parallax="0.1" aria-hidden="true"></div>
+      <div class="hero-orbit" data-parallax="0.12" aria-hidden="true"></div>
 
       <div class="hero-copy">
         <h1 class="hero-title" data-reveal="lines">
-          <span><i>Happiness,</i></span>
-          <span><i>served warm.</i></span>
+          <span><i>Dessert worth</i></span>
+          <span><i>the detour.</i></span>
         </h1>
-        <p class="hero-lead" data-reveal="fade">Coffee, matcha, pastries, ice cream and a signature cookie cup — made for slow moments in Annaba.</p>
+        <p class="hero-lead" data-reveal="fade">Gelato, waffles, crêpes, cakes and sweet things — presented as a fictional portfolio concept.</p>
         <div class="hero-actions" data-reveal="fade">
           <button class="primary-link" type="button" data-menu-open>
-            <span>See the highlights</span>
+            <span>See the menu</span>
             <span class="arrow" aria-hidden="true">↗</span>
           </button>
-          <a class="quiet-link" href="#visit">Find Mélina <span aria-hidden="true">↓</span></a>
+          <a class="quiet-link" href="#visit">Location <span aria-hidden="true">↓</span></a>
         </div>
       </div>
 
-      <div class="hero-food" aria-label="Illustration of Mélina's signature cookie cup">
-        <div class="brand-hero-plate" data-parallax="0.16">
-          <div class="cookie-cup-art" aria-hidden="true"></div>
-          <p class="hero-art-label">Cookie cup · coffee · ice cream</p>
+      <div class="hero-food" aria-label="Fictional dessert artwork">
+        <div class="hero-photo-shell" data-parallax="0.18">
+          <img class="hero-photo" src="assets/demo-hero.svg" alt="Illustrated gelato dessert created for this demo site" />
         </div>
+        <img class="food food-pancake-real demo-waffle-float" src="assets/waffle.svg" alt="" aria-hidden="true" data-parallax="-0.12" />
       </div>
     </section>
 
     <section class="menu-callout" id="menu">
       <div class="menu-callout-copy">
-        <h2 data-reveal="lines"><span><i>Pick your</i></span><span><i>mood.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Pick a</i></span><span><i>favorite.</i></span></h2>
       </div>
 
       <button class="menu-launch" type="button" data-menu-open data-reveal="scale">
         <span class="menu-launch-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/></svg>
+          <svg viewBox="0 0 48 48">
+            <path d="M13 20.5h22L27.3 39a3.6 3.6 0 0 1-6.6 0L13 20.5Z"/>
+            <circle cx="18.5" cy="17" r="8"/>
+            <circle cx="28.6" cy="15.8" r="9"/>
+          </svg>
         </span>
-        <span><strong>Mélina highlights</strong></span>
+        <span><strong>Mello’s menu</strong></span>
         <span class="menu-launch-arrow" aria-hidden="true">↗</span>
       </button>
+
+      <div class="menu-float-art" aria-hidden="true">
+        <img src="assets/waffle.svg" alt="" data-parallax="0.18" />
+      </div>
     </section>
 
-    <section class="story" aria-label="Mélina menu highlights">
+    <section class="story" aria-label="Mello dessert concept">
       <div class="story-head">
-        <h2 data-reveal="lines"><span><i>Made for</i></span><span><i>slow moments.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Made for fun.</i></span><span><i>Built as a demo.</i></span></h2>
       </div>
 
       <div class="story-gallery">
-        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe">
-          <div class="photo-image-shell product-tile matcha">
-            <div class="product-art matcha-cup" aria-hidden="true"></div>
+        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe" data-lightbox="assets/demo-waffle-bites.svg" tabindex="0" role="button" aria-label="View waffle artwork larger">
+          <div class="photo-image-shell shell-warm">
+            <img src="assets/demo-waffle-bites.svg" alt="Illustrated waffle bites for the demo brand" />
           </div>
-          <figcaption><span>ICED MATCHA</span><strong>Cool, green, easy.</strong></figcaption>
+          <figcaption><span>Waffle bites</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe">
-          <div class="photo-image-shell product-tile roll">
-            <div class="product-art new-york-roll" aria-hidden="true"></div>
+        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="assets/demo-berry-cake.svg" tabindex="0" role="button" aria-label="View berry cake artwork larger">
+          <div class="photo-image-shell shell-pink">
+            <img src="assets/demo-berry-cake.svg" alt="Illustrated berry cake for the demo brand" />
           </div>
-          <figcaption><span>NEW YORK ROLL</span><strong>Flaky with a sweet finish.</strong></figcaption>
+          <figcaption><span>Berry cake</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe">
-          <div class="photo-image-shell product-tile chocolate">
-            <div class="product-art hot-chocolate" aria-hidden="true"></div>
+        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="assets/demo-gelato-cup.svg" tabindex="0" role="button" aria-label="View gelato artwork larger">
+          <div class="photo-image-shell shell-cool">
+            <img src="assets/demo-gelato-cup.svg" alt="Illustrated gelato cup for the demo brand" />
           </div>
-          <figcaption><span>HOT CHOCOLATE</span><strong>Warm, rich, uncomplicated.</strong></figcaption>
+          <figcaption><span>Gelato mix</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe">
-          <div class="photo-image-shell product-tile icecream">
-            <div class="product-art icecream-scoop" aria-hidden="true"></div>
+        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="assets/demo-pistachio-slice.svg" tabindex="0" role="button" aria-label="View pistachio dessert artwork larger">
+          <div class="photo-image-shell shell-pistachio">
+            <img src="assets/demo-pistachio-slice.svg" alt="Illustrated chocolate and pistachio dessert for the demo brand" />
           </div>
-          <figcaption><span>ICE CREAM</span><strong>The cold side of happiness.</strong></figcaption>
+          <figcaption><span>Chocolate &amp; pistachio</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="reel-section signature-section" aria-label="Mélina signature">
+    <section class="reel-section" aria-label="Mello concept motion preview">
       <div class="reel-copy">
-        <h2 data-reveal="lines"><span><i>The cup is</i></span><span><i>part of dessert.</i></span></h2>
-        <p data-reveal="fade">Mélina's standout idea turns coffee into the dessert itself: an edible cookie cup, finished with ice cream on top.</p>
+        <h2 data-reveal="lines"><span><i>See Mello</i></span><span><i>in motion.</i></span></h2>
+        <p data-reveal="fade">A portfolio-ready social section, using demo artwork instead of content from a real business.</p>
+        <span class="reel-link" data-reveal="fade">Concept reel frame ↗</span>
       </div>
 
-      <div class="reel-device signature-device" data-reveal="scale">
-        <div class="signature-quote">
-          <span class="eyebrow">Signature</span>
-          <strong>Drink it.<br>Eat the cup.</strong>
-          <p>A playful little ritual that gives the brand something instantly memorable.</p>
+      <div class="reel-device demo-reel-device" data-reveal="scale" aria-label="Fictional social-media reel preview">
+        <div class="reel-embed-wrap">
+          <img class="demo-reel-image" src="assets/demo-motion.svg" alt="Fictional Mello social-media reel artwork" />
         </div>
       </div>
     </section>
 
     <section class="visit" id="visit">
       <div class="visit-copy">
-        <p class="kicker">Annaba</p>
-        <h2 data-reveal="lines"><span><i>Find</i></span><span><i>Mélina.</i></span></h2>
-        <p>WQ66+8G6, Boulevard Ernesto Che Guevara, Annaba, Algeria.</p>
-
-        <div class="visit-links" data-reveal="fade">
-          <a href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A9lina%20Happiness%20in%20a%20Cup%20Annaba" target="_blank" rel="noreferrer">Google Maps ↗</a>
-        </div>
+        <h2 data-reveal="lines"><span><i>Find</i></span><span><i>Mello.</i></span></h2>
+        <p class="demo-location-copy" data-reveal="fade">location not set since this is just a demo site</p>
       </div>
 
-      <div class="map-wrap" data-reveal="map">
+      <div class="map-wrap demo-map" data-reveal="map" aria-label="Demo location placeholder">
         <div class="map-curtain" aria-hidden="true"></div>
-        <iframe
-          title="Mélina Happiness in a Cup on Google Maps"
-          src="https://www.google.com/maps?q=WQ66%2B8G6%2C%20Bd%20Ernesto%20Che%20Guevara%2C%20Annaba%2C%20Algeria&amp;output=embed"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <div class="demo-map-grid" aria-hidden="true">
+          <span class="demo-map-pin">?</span>
+          <div>
+            <strong>Location not set</strong>
+            <small>Portfolio concept only</small>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mello demo artwork viewer">
+    <button class="lightbox-backdrop" type="button" data-lightbox-close aria-label="Close image viewer"></button>
+    <div class="lightbox-panel">
+      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">
+        <span></span><span></span>
+      </button>
+      <img src="" alt="" data-lightbox-image />
+      <div class="lightbox-caption" data-lightbox-caption></div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-top">
-      <div class="footer-brand"><span>Mélina</span></div>
+      <div class="footer-brand"><span>MELLO</span></div>
 
       <div class="footer-socials">
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=M%C3%A9lina%20Happiness%20in%20a%20Cup%20Annaba" target="_blank" rel="noreferrer"><span>Google Maps</span><b>↗</b></a>
-        <a href="#menu" data-menu-open><span>Menu highlights</span><b>↗</b></a>
+        <a href="#menu"><span>Sample menu</span><b>↓</b></a>
+        <a href="#visit"><span>Location not set</span><b>↓</b></a>
+        <a href="#top"><span>Portfolio concept</span><b>↑</b></a>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span class="footer-note">Happiness in a Cup · Annaba</span>
+      <button type="button" data-menu-open>Menu</button>
+      <span>Fictional brand · demo website</span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
