@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#fff8f6" />
-  <meta name="description" content="Mello Dessert Club — a fictional dessert-shop portfolio concept." />
-  <meta property="og:title" content="Mello Dessert Club — Demo" />
-  <meta property="og:description" content="A fictional portfolio demo for a dessert brand." />
+  <meta name="description" content="Mello Dessert Club — fictional dessert shop portfolio demo." />
+  <meta property="og:title" content="Mello Dessert Club — Portfolio Demo" />
+  <meta property="og:description" content="A fictional dessert-brand website concept." />
   <meta property="og:type" content="website" />
   <title>Mello Dessert Club — Portfolio Demo</title>
   <link rel="stylesheet" href="styles.css" />
@@ -26,10 +26,11 @@
         <span class="crepe-cursor-shape" aria-hidden="true"></span>
       </span>
     </div>
+    <div class="cursor-particles" id="cursorParticles"></div>
   </div>
 
   <header class="site-header" data-header>
-    <div class="header-socials demo-label" aria-label="Portfolio demo status">
+    <div class="header-socials demo-status" aria-label="Demo website status">
       <span>Portfolio demo</span>
       <span aria-hidden="true">/</span>
       <span>Fictional brand</span>
@@ -64,19 +65,18 @@
     <div class="menu-toolbar">
       <label class="menu-select-wrap">
         <span>Category</span>
-        <select data-menu-category aria-label="Filter sample menu by category"></select>
+        <select data-menu-category aria-label="Filter menu by category"></select>
       </label>
       <label class="menu-search-wrap">
         <span>Search</span>
-        <input type="search" placeholder="Try “pistachio” or “waffle”" data-menu-search autocomplete="off" />
+        <input type="search" placeholder="Try “waffle” or “pistachio”" data-menu-search autocomplete="off" />
       </label>
     </div>
 
     <div class="menu-results-meta">
       <span><b data-menu-count>0</b> sample items</span>
-      <span>Demo menu · fictional prices</span>
+      <span>Fictional demo menu</span>
     </div>
-
     <div class="menu-list" data-menu-list aria-live="polite"></div>
   </section>
 
@@ -89,7 +89,7 @@
           <span><i>Dessert worth</i></span>
           <span><i>the detour.</i></span>
         </h1>
-        <p class="hero-lead" data-reveal="fade">Gelato, waffles, crêpes, cakes and sweet things — presented as a fictional portfolio concept.</p>
+        <p class="hero-lead" data-reveal="fade">Gelato, crêpes, waffles, cakes and sweet things — built as a fictional portfolio concept.</p>
         <div class="hero-actions" data-reveal="fade">
           <button class="primary-link" type="button" data-menu-open>
             <span>See the menu</span>
@@ -99,11 +99,12 @@
         </div>
       </div>
 
-      <div class="hero-food" aria-label="Fictional dessert artwork">
-        <div class="hero-photo-shell" data-parallax="0.18">
-          <img class="hero-photo" src="assets/demo-hero.svg" alt="Illustrated gelato dessert created for this demo site" />
+      <div class="hero-food" aria-label="Demo waffle image">
+        <div class="hero-photo-shell web-demo-image" data-parallax="0.18">
+          <span class="demo-image-badge">DEMO IMAGE</span>
+          <img class="hero-photo" src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Waffles.png" alt="Close-up waffles used as demo portfolio media" />
         </div>
-        <img class="food food-pancake-real demo-waffle-float" src="assets/waffle.svg" alt="" aria-hidden="true" data-parallax="-0.12" />
+        <img class="food food-pancake-real" src="assets/pancake%20nobg.png" alt="" aria-hidden="true" data-parallax="-0.12" />
       </div>
     </section>
 
@@ -129,52 +130,71 @@
       </div>
     </section>
 
-    <section class="story" aria-label="Mello dessert concept">
+    <section class="story" aria-label="Mello Dessert Club demo gallery">
       <div class="story-head">
-        <h2 data-reveal="lines"><span><i>Made for fun.</i></span><span><i>Built as a demo.</i></span></h2>
+        <h2 data-reveal="lines"><span><i>Looks real.</i></span><span><i>Stays a demo.</i></span></h2>
       </div>
 
       <div class="story-gallery">
-        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe" data-lightbox="assets/demo-waffle-bites.svg" tabindex="0" role="button" aria-label="View waffle artwork larger">
-          <div class="photo-image-shell shell-warm">
-            <img src="assets/demo-waffle-bites.svg" alt="Illustrated waffle bites for the demo brand" />
+        <figure class="photo-frame frame-a" data-tilt data-reveal="wipe" data-lightbox="https://upload.wikimedia.org/wikipedia/commons/e/e8/Waffles.png" tabindex="0" role="button" aria-label="View demo waffle image larger">
+          <div class="photo-image-shell shell-warm web-demo-image">
+            <span class="demo-image-badge">DEMO</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Waffles.png" alt="Waffles used as demo portfolio media" />
           </div>
           <figcaption><span>Waffle bites</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="assets/demo-berry-cake.svg" tabindex="0" role="button" aria-label="View berry cake artwork larger">
-          <div class="photo-image-shell shell-pink">
-            <img src="assets/demo-berry-cake.svg" alt="Illustrated berry cake for the demo brand" />
+        <figure class="photo-frame frame-b" data-tilt data-reveal="wipe" data-lightbox="https://upload.wikimedia.org/wikipedia/commons/6/6e/Wikipedia_celebration_strawberry_cream_cake%21.png" tabindex="0" role="button" aria-label="View demo cake image larger">
+          <div class="photo-image-shell shell-pink web-demo-image">
+            <span class="demo-image-badge">DEMO</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Wikipedia_celebration_strawberry_cream_cake%21.png" alt="Strawberry cream cake used as demo portfolio media" />
           </div>
-          <figcaption><span>Berry cake</span></figcaption>
+          <figcaption><span>Strawberry cake</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="assets/demo-gelato-cup.svg" tabindex="0" role="button" aria-label="View gelato artwork larger">
-          <div class="photo-image-shell shell-cool">
-            <img src="assets/demo-gelato-cup.svg" alt="Illustrated gelato cup for the demo brand" />
+        <figure class="photo-frame frame-c" data-tilt data-reveal="wipe" data-lightbox="https://upload.wikimedia.org/wikipedia/commons/c/c6/Marianne_ice_cream.png" tabindex="0" role="button" aria-label="View demo ice cream image larger">
+          <div class="photo-image-shell shell-cool web-demo-image">
+            <span class="demo-image-badge">DEMO</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Marianne_ice_cream.png" alt="Ice cream used as demo portfolio media" />
           </div>
-          <figcaption><span>Gelato mix</span></figcaption>
+          <figcaption><span>Ice cream</span></figcaption>
         </figure>
 
-        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="assets/demo-pistachio-slice.svg" tabindex="0" role="button" aria-label="View pistachio dessert artwork larger">
-          <div class="photo-image-shell shell-pistachio">
-            <img src="assets/demo-pistachio-slice.svg" alt="Illustrated chocolate and pistachio dessert for the demo brand" />
+        <figure class="photo-frame frame-d" data-tilt data-reveal="wipe" data-lightbox="https://upload.wikimedia.org/wikipedia/commons/8/83/Cr%C3%AApes_o_Crespelle.png" tabindex="0" role="button" aria-label="View demo crêpe image larger">
+          <div class="photo-image-shell shell-pistachio web-demo-image">
+            <span class="demo-image-badge">DEMO</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Cr%C3%AApes_o_Crespelle.png" alt="Crêpes used as demo portfolio media" />
           </div>
-          <figcaption><span>Chocolate &amp; pistachio</span></figcaption>
+          <figcaption><span>Fresh crêpes</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="reel-section" aria-label="Mello concept motion preview">
+    <section class="reel-section" aria-label="Demo social Reel preview">
       <div class="reel-copy">
         <h2 data-reveal="lines"><span><i>See Mello</i></span><span><i>in motion.</i></span></h2>
-        <p data-reveal="fade">A portfolio-ready social section, using demo artwork instead of content from a real business.</p>
-        <span class="reel-link" data-reveal="fade">Concept reel frame ↗</span>
+        <p data-reveal="fade">A clean social-media preview section for the portfolio concept.</p>
       </div>
 
-      <div class="reel-device demo-reel-device" data-reveal="scale" aria-label="Fictional social-media reel preview">
+      <div class="reel-device reel-demo-card" data-reveal="scale" aria-label="Demo Reel card">
+        <div class="reel-topline">
+          <span class="reel-dot"></span>
+          <strong>REEL</strong>
+          <span>DEMO</span>
+        </div>
+
         <div class="reel-embed-wrap">
-          <img class="demo-reel-image" src="assets/demo-motion.svg" alt="Fictional Mello social-media reel artwork" />
+          <img class="reel-cover-image" src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Wikipedia_celebration_strawberry_cream_cake%21.png" alt="Cake image used as a demo Reel cover" />
+          <span class="reel-cover-shade" aria-hidden="true"></span>
+          <button class="reel-play" type="button" aria-label="Demo Reel preview — playback is not connected">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+          </button>
+          <span class="reel-corner-label">PORTFOLIO PREVIEW</span>
+        </div>
+
+        <div class="reel-note">
+          <span>Sample social content</span>
+          <span>0:12</span>
         </div>
       </div>
     </section>
@@ -187,18 +207,18 @@
 
       <div class="map-wrap demo-map" data-reveal="map" aria-label="Demo location placeholder">
         <div class="map-curtain" aria-hidden="true"></div>
-        <div class="demo-map-grid" aria-hidden="true">
-          <span class="demo-map-pin">?</span>
+        <div class="demo-map-content">
+          <span class="demo-map-pin" aria-hidden="true">?</span>
           <div>
             <strong>Location not set</strong>
-            <small>Portfolio concept only</small>
+            <small>This is just a demo site.</small>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mello demo artwork viewer">
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mello demo image viewer">
     <button class="lightbox-backdrop" type="button" data-lightbox-close aria-label="Close image viewer"></button>
     <div class="lightbox-panel">
       <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">
@@ -220,9 +240,16 @@
       </div>
     </div>
 
+    <div class="media-credits">
+      Demo media: <a href="https://commons.wikimedia.org/wiki/File:Waffles.png" target="_blank" rel="noreferrer">Waffles · Pplc · CC BY-SA 4.0</a>,
+      <a href="https://commons.wikimedia.org/wiki/File:Marianne_ice_cream.png" target="_blank" rel="noreferrer">Ice cream · Tiia Monto · CC BY-SA 3.0</a>,
+      <a href="https://commons.wikimedia.org/wiki/File:Wikipedia_celebration_strawberry_cream_cake!.png" target="_blank" rel="noreferrer">cake · CC0</a>,
+      <a href="https://commons.wikimedia.org/wiki/File:Cr%C3%AApes_o_Crespelle.png" target="_blank" rel="noreferrer">crêpes · CC0</a>.
+    </div>
+
     <div class="footer-bottom">
       <button type="button" data-menu-open>Menu</button>
-      <span>Fictional brand · demo website</span>
+      <span>Fictional brand · portfolio demo</span>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
